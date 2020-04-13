@@ -1,0 +1,42 @@
+.card {
+    border-radius: 0.6rem;
+    box-shadow: 0 0 1px rgba(0,0,0,0.25), 0 1px 3px rgba(0,0,0,0.1);
+    background: #fff;
+    width: 600px;
+    height: 200px;
+    margin-top: 20px;
+}
+
+.card-container {
+    padding: 20px;
+}
+
+.card-title {
+    font-size: 22px;
+    color: #283C46;
+    font-weight: 700;
+    text-align: left;
+}
+
+.card-description {
+    font-size: 16px;
+    font-weight: 500;
+    color: #283C46;
+    text-align: left;
+}
+
+.title {
+    color: #283c46;
+    font-size: 32px;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.list-container {
+    align-items: center;
+    flex-direction: column;
+    display: flex;
+    flex: 1;
+    margin-bottom: 40px;
+}

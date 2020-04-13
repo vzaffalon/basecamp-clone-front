@@ -1,5 +1,19 @@
 .App {
   text-align: center;
+  background-color: #F6F2EF;
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  overflow: auto;
+  font-family: "Graphik", "Helvetica Neue", helvetica, "Apple Color Emoji", arial, sans-serif;
+}
+
+
+.background {
+  flex: 1
 }
 
 .App-logo {
