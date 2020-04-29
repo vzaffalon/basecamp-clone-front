@@ -3,8 +3,6 @@ import logo from './logo.svg';
 import './App.css';
 import ProjectsListScreen from 'projects/ProjectsListScreen.js'
 import MainRouter from 'MainRouter.js'
-
-import React from "react";
 import {
   BrowserRouter as Router,
   Switch,
