@@ -6,7 +6,7 @@ import {
   Link
 } from "react-router-dom";
 import ProjectsListScreen from 'projects/ProjectsListScreen'
-import ProjectsMenuScreen from 'projects/ProjectMenuScreen'
+import ProjectMenuScreen from 'projects/ProjectMenuScreen'
 
 export default function MainRouter() {
   return (
@@ -16,7 +16,7 @@ export default function MainRouter() {
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
         <Switch>
-          <Route path="/projects">
+          <Route exact path="/">
             <ProjectsListScreen></ProjectsListScreen>
           </Route>
           <Route path="/project_menu">
