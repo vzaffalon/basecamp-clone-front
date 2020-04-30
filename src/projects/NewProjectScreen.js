@@ -15,28 +15,9 @@ function ProjectMenuScreen(){
     return (
         <AlignCenterFullHeight>
             <MenuCard>
-                    <ProjectTitle>Project Name</ProjectTitle>
-                    <Column>
-                        <Row>
-                            <ToolCard onClick={(e) => goToProjectScreen()}>
-                                <ToolTitle>Message Board</ToolTitle>
-                            </ToolCard>
-                            <ToolCard>
-                                <ToolTitle>To-dos</ToolTitle>
-                            </ToolCard>
-                        </Row>
+                <div>Adicionar novo projeto</div>
 
-                        <Row>
-                            <ToolCard>
-                                <ToolTitle>Docs & Files</ToolTitle>
-                            </ToolCard>
-
-                    
-                            <ToolCard>
-                                <ToolTitle>Schedule</ToolTitle>
-                            </ToolCard>
-                        </Row>
-                    </Column>
+                
             </MenuCard>
         </AlignCenterFullHeight>
     );

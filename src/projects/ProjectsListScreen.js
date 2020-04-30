@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useHistory } from "react-router-dom";
+import { PrimaryButton, Card } from 'AppStyles'
+import { Column, Row } from 'AppStyles';
 
 const ProjectList = () => {
     let history = useHistory();
@@ -37,19 +39,70 @@ const ProjectList = () => {
 function ProjectsListScreen() {
 
     return (
-        <div>
-            <ProjectsListTitle>Your Projects</ProjectsListTitle>
+        <Container>
+            <SpaceBetweenRow>
+                <Flex>
+                    <TitleDivider></TitleDivider>
+                </Flex>
+                <Flex>
+                    <ProjectsListTitle>Your Projects</ProjectsListTitle>
+                </Flex>
+                <Flex>
+                    <RowCenterVertical>
+                        <TitleDivider></TitleDivider>
+                        <PrimaryButtonMargin>
+                            <PrimaryButton>Novo</PrimaryButton>
+                        </PrimaryButtonMargin>
+                    </RowCenterVertical>
+                </Flex>
+            </SpaceBetweenRow>
             <ListContainer>
                 <ProjectList></ProjectList>
             </ListContainer>
-        </div>
+        </Container>
     );
 }
 
-const MenuCard = styled.div`
-    border-radius: 0.6rem;
-    box-shadow: 0 0 1px rgba(0,0,0,0.25), 0 1px 3px rgba(0,0,0,0.1);
-    background: #fff;
+const RowCenterVertical = styled(Row)`
+    align-items: center;
+`
+
+const Flex = styled.div`
+    flex: 1;
+`;
+
+const NoFlex = styled.div`
+    flex: 0;
+`;
+
+const PrimaryButtonMargin = styled.div`
+    margin-left: 10px;
+`;
+
+const TitleDivider = styled.div`
+    height: 1px;
+    width: 100%;
+    background-color: #ddd9d7;
+`;
+
+
+const Container = styled.div`
+    align-items: center;
+    flex-direction: column;
+    display: flex;
+    flex: 1;
+`;
+
+const SpaceBetweenRow = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 40px;
+    width: 600px;
+    justify-content: space-between;
+`;
+
+const MenuCard = styled(Card)`
     width: 600px;
     height: 200px;
     margin-top: 20px;
@@ -83,9 +136,9 @@ const ListContainer = styled.div`
 
 const ProjectsListTitle = styled.div`
     color: #283c46;
-    font-size: 32px;
-    margin-top: 30px;
-    margin-bottom: 10px;
+    font-size: 28px;
+    margin-right: 5px;
+    margin-left: 5px;
     font-weight: 700;
 `
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import 'App';
+import { Card, AlignCenter } from 'AppStyles';
 
 function MessageBoardListScreen(){
 
@@ -8,7 +9,7 @@ function MessageBoardListScreen(){
         const messages = [
             {
                 title: 'Ideias para a carreira',
-                message: 'Esse projeto é um projeto de teste'
+                description: 'Esse projeto é um projeto de teste'
             },
             {
                 title: 'Amazon interview questions',
@@ -50,7 +51,7 @@ const MessageTitle = styled.div`
     font-size: 18px;
     color: #283C46;
     font-weight: 700;
-    text-align: center;
+    text-align: left;
     margin-top: 20px;
     margin-bottom: 20px;
 `;
@@ -58,10 +59,9 @@ const MessageTitle = styled.div`
 const MessageDescription = styled.div`
     font-size: 18px;
     color: #283C46;
-    font-weight: 700;
-    text-align: center;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    font-weight: 300;
+    text-align: left;
+    margin-top: 5px;
 `;
 
 const MessageDivider = styled.div`
@@ -76,33 +76,14 @@ const LineDivider = styled.div`
     background-color: #283c46;
 `
 
-const AlignCenter = styled.div`
-    display: flex;
-    justify-content: center;
-`
-
-const Row = styled.div`
-    display: flex;
-    flex-direction: row;
-`
-
-const Column = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-`
-
-const MenuCard = styled.div`
-    border-radius: 3px;
+const MenuCard = styled(Card)`
     padding: 15px;
-    background: #fff;
     width: 800px;
     height: 800px;
     margin-top: 20px;
-    box-shadow: 0 0 2px rgba(0,0,0,0.35), 0 1px 3px rgba(0,0,0,0.1);
 `
 
-const ToolCard = styled.div`
+const ToolCard = styled(Card)`
         position: relative;
         width: 240px;
         height: 240px;
@@ -113,8 +94,6 @@ const ToolCard = styled.div`
         text-align: left;
         text-rendering: optimizeLegibility;
         word-wrap: break-word;
-        border-radius: 0.6rem;
-        box-shadow: 0 0 2px rgba(0,0,0,0.35), 0 1px 3px rgba(0,0,0,0.1);
         background: #fff;
 `;
 
