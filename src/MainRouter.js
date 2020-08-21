@@ -6,6 +6,7 @@ import {
   Link
 } from "react-router-dom";
 import ProjectsListScreen from 'projects/ProjectsListScreen'
+import NewProjectScreen from 'projects/NewProjectScreen'
 import ProjectMenuScreen from 'projects/ProjectMenuScreen'
 import MessageBoardListScreen from "projects/message_board/MessageBoardListScreen";
 
@@ -22,6 +23,9 @@ export default function MainRouter() {
           </Route>
           <Route path="/project_menu">
             <ProjectMenuScreen></ProjectMenuScreen>
+          </Route>
+          <Route path="/new_project">
+            <NewProjectScreen></NewProjectScreen>
           </Route>
           <Route path="/message_board">
             <MessageBoardListScreen></MessageBoardListScreen>

@@ -37,21 +37,32 @@ const ProjectList = () => {
 }
 
 function ProjectsListScreen() {
+    let history = useHistory();
+
+    const goToNewProjectScreen = () => {
+        history.push("/new_project")
+    }
 
     return (
         <Container>
+            <GlobMargin>
+                <img src="logo.png" alt="Girl in a jacket" width="60" height="60"></img>
+                <div>
+                    <GlobText>Oi eu sou o Glob</GlobText>
+                    <GlobDescription>Seu organizador pesssoal</GlobDescription>
+                </div>
+            </GlobMargin>
             <SpaceBetweenRow>
                 <Flex>
-                    <TitleDivider></TitleDivider>
                 </Flex>
-                <Flex>
-                    <ProjectsListTitle>Your Projects</ProjectsListTitle>
-                </Flex>
+                <DoubleFlex>
+                    <ProjectsListTitle>Seus Projetos</ProjectsListTitle>
+                </DoubleFlex>
                 <Flex>
                     <RowCenterVertical>
                         <TitleDivider></TitleDivider>
                         <PrimaryButtonMargin>
-                            <PrimaryButton>Novo</PrimaryButton>
+                            <PrimaryButton onClick={(e) => goToNewProjectScreen()}>Novo</PrimaryButton>
                         </PrimaryButtonMargin>
                     </RowCenterVertical>
                 </Flex>
@@ -63,12 +74,40 @@ function ProjectsListScreen() {
     );
 }
 
+const GlobText = styled.div`
+    font-size: 20px;
+    margin-top: 5px;
+    text-align: left;
+    margin-left: 10px;
+`;
+
+const GlobDescription = styled.div`
+    font-size: 16px;
+    margin-top: 5px;
+    text-align: left;
+    margin-left: 10px;
+`;
+
+const GlobMargin = styled.div`
+    margin-top: 30px;
+    flex-direction: row;
+    display: flex;
+    flex: 1;
+    align-items: center;
+    color: #283C46;
+    font-weight: 500;
+`;
+
 const RowCenterVertical = styled(Row)`
     align-items: center;
 `
 
 const Flex = styled.div`
     flex: 1;
+`;
+
+const DoubleFlex = styled.div`
+    flex: 2;
 `;
 
 const NoFlex = styled.div`
@@ -97,15 +136,25 @@ const SpaceBetweenRow = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-top: 40px;
-    width: 600px;
     justify-content: space-between;
+
+    @media(mAX-width: 800px) {
+        margin-top: 20px;
+    }
+
+    @media(min-width: 800px) {
+        margin-top: 40px;
+        width: 600px;
+    }
 `;
 
 const MenuCard = styled(Card)`
-    width: 600px;
-    height: 200px;
-    margin-top: 20px;
+    margin-top: 18px;
+
+    @media(min-width: 800px) {
+        width: 600px;
+        height: 200px;
+    }
 `;
 
 const CardContainer = styled.div`
@@ -136,10 +185,20 @@ const ListContainer = styled.div`
 
 const ProjectsListTitle = styled.div`
     color: #283c46;
-    font-size: 28px;
     margin-right: 5px;
     margin-left: 5px;
     font-weight: 700;
+
+    @media(min-width: 800px) {
+        font-size: 20px;
+        width: 600px;
+    }
+
+    @media(max-width: 800px) {
+        font-size: 28px;
+        flex-direction: column;
+        position: relative;
+    }
 `
 
 export default ProjectsListScreen

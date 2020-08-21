@@ -15,32 +15,40 @@ function ProjectMenuScreen(){
     return (
         <AlignCenterFullHeight>
             <MenuCard>
-                    <ProjectTitle>Project Name</ProjectTitle>
+                <MenuCardMargin>
+                    <ProjectTitle>Nome do Projeto</ProjectTitle>
                     <Column>
-                        <Row>
+                        <ResponsiveRow>
                             <ToolCard onClick={(e) => goToProjectScreen()}>
-                                <ToolTitle>Message Board</ToolTitle>
+                                <ToolTitle>Meu mural</ToolTitle>
                             </ToolCard>
                             <ToolCard>
-                                <ToolTitle>To-dos</ToolTitle>
+                                <ToolTitle>Listas To-dos</ToolTitle>
                             </ToolCard>
-                        </Row>
+                        </ResponsiveRow>
 
-                        <Row>
+                        <ResponsiveRow>
                             <ToolCard>
-                                <ToolTitle>Docs & Files</ToolTitle>
+                                <ToolTitle>Documentos & Arquivos</ToolTitle>
                             </ToolCard>
 
                     
                             <ToolCard>
-                                <ToolTitle>Schedule</ToolTitle>
+                                <ToolTitle>Agenda</ToolTitle>
                             </ToolCard>
-                        </Row>
+                        </ResponsiveRow>
                     </Column>
+                </MenuCardMargin>
             </MenuCard>
         </AlignCenterFullHeight>
     );
 }
+
+const ResponsiveRow = styled(Row)`
+@media(max-width: 800px) {
+  flex-direction: column
+}
+`
 
 const AlignCenterFullHeight = styled(AlignCenter)`
     flex: 1;
@@ -48,9 +56,16 @@ const AlignCenterFullHeight = styled(AlignCenter)`
 `
 
 const MenuCard = styled(Card)`
-    width: 800px;
-    height: 800px;
     margin-top: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+    margin-left: 10px;
+    margin-right: 10px;
+
+    @media(min-width: 800px) {
+        width: 800px;
+        height: 800px;
+    }
 `
 
 const ToolCard = styled(Card)`
@@ -64,6 +79,14 @@ const ToolCard = styled(Card)`
         text-align: left;
         text-rendering: optimizeLegibility;
         word-wrap: break-word;
+
+        @media(max-width: 800px) {
+            height: 180px;
+        }
+`;
+
+const MenuCardMargin = styled.div`
+    margin-bottom: 20px;
 `;
 
 const ProjectTitle = styled.div`
