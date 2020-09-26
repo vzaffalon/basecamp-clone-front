@@ -11,7 +11,7 @@ export const Column = styled.div`
     align-items: center;
 `
 
-export const RoudendButton = styled.div`
+export const RoudendButton = styled.button`
     display: inline-block;
     padding: 0.5em 1em;
     border-radius: 1.5em;
@@ -25,7 +25,7 @@ export const RoudendButton = styled.div`
 export const PrimaryButton = styled(RoudendButton)`
     background-color: #2da562;
     border-color: #2da562;
-    height: 18px;
+    height: 40px;
     color: #fff;
 `
 

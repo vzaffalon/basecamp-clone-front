@@ -1,39 +1,42 @@
-import React from 'react';
+import React,{ useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useHistory } from "react-router-dom";
 import { PrimaryButton, Card } from 'AppStyles'
 import { Column, Row } from 'AppStyles';
+import { Project } from 'models/index.js';
 
 const ProjectList = () => {
     let history = useHistory();
-    const projects = [
-        {
-            title: 'Title 1',
-            description: 'Esse projeto é um projeto de teste'
-        },
-        {
-            title: 'Title 2',
-            description: 'Esse projeto é um projeto de teste'
-        },
-        {
-            title: 'Title 3',
-            description: 'Esse projeto é um projeto de teste'
-        },
-    ];
+    const [projects, setProjects] = useState([]);
+    
+
+    const getProjects = () => {
+        Project.list().then( response => {
+            setProjects(response.data)
+        })
+    }
+
+    useEffect(() => {
+        getProjects();
+    },[]);    
 
     const goToProjectScreen = () => {
         history.push("/project_menu")
     }
 
 
-    return projects.map((project) => 
-        <MenuCard onClick={(e) => goToProjectScreen()}>
-            <CardContainer>
-                <CardTitle>{project.title}</CardTitle>
-                <CardDescription>{project.description}</CardDescription>
-            </CardContainer>
-        </MenuCard>
-    )
+    return <div>
+            {projects.map((project) => {
+                const {name, description } = project
+                return <MenuCard onClick={(e) => goToProjectScreen()}>
+                        <CardContainer>
+                            <CardTitle>{name}</CardTitle>
+                            <CardDescription>{description}</CardDescription>
+                        </CardContainer>
+                </MenuCard>
+                }
+            )}
+        </div>
 }
 
 function ProjectsListScreen() {
@@ -45,13 +48,13 @@ function ProjectsListScreen() {
 
     return (
         <Container>
-            <GlobMargin>
+            {/* <GlobMargin>
                 <img src="logo.png" alt="Girl in a jacket" width="60" height="60"></img>
                 <div>
                     <GlobText>Oi eu sou o Glob</GlobText>
                     <GlobDescription>Seu organizador pesssoal</GlobDescription>
                 </div>
-            </GlobMargin>
+            </GlobMargin> */}
             <SpaceBetweenRow>
                 <Flex>
                 </Flex>
@@ -159,6 +162,8 @@ const MenuCard = styled(Card)`
 
 const CardContainer = styled.div`
     padding: 20px;
+    min-height: 90px;
+    min-width: 300px;
 `;
 
 const CardTitle = styled.div`

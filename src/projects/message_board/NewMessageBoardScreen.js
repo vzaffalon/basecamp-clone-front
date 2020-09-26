@@ -1,36 +1,40 @@
 import React from 'react';
 import styled from 'styled-components';
+import 'App';
 import { useHistory } from "react-router-dom";
 import { Row, Column, Card, AlignCenter, PrimaryButton } from 'AppStyles';
 import { useForm } from "react-hook-form";
-import { Project } from 'models'
+import { MessageBoard } from 'models'
+import 'trix';
+import 'trix/dist/trix.css';
 
-function NewProjectScreen(){
+function NewMessageBoardScreen(){
     let history = useHistory();
     const { register, handleSubmit, watch, errors } = useForm();
 
-    const createNewProject = (values) => {
-        debugger;
-        Project.create(values).then((response) => {
+    const createNewMessageBoard = (values) => {
+        MessageBoard.create(values).then((response) => {
             history.goBack()
         })
     }
 
-
     return (
         <AlignCenterFullHeight>
             <MenuCard>
-            <NewProjectTitle>Qual o nome do projeto?</NewProjectTitle>
-            <form onSubmit={handleSubmit(createNewProject)}>
+            <NewProjectTitle>Titulo</NewProjectTitle>
+            <form onSubmit={handleSubmit(createNewMessageBoard)}>
                 <div>
-                    <Input type="text" id="name" name="name" ref={register({ required: true })} ></Input>
+                    <Input type="text" id="titke" name="title" ref={register({ required: true })} ></Input>
                     <span>{errors.name && errors.name.message}</span>
 
-                    <ProjectDescriptionLabel>Descrição do projeto</ProjectDescriptionLabel>
-                    <Input type="text" id="description" name="description" ref={register({ required: true })} ></Input>
-                    <span>{errors.name && errors.name.message}</span>
-        
-                    <PrimaryButton type="submit">Criar projeto</PrimaryButton>
+
+                    <ProjectDescriptionLabel>Descrição</ProjectDescriptionLabel>
+                    <input id="description" type="hidden" ref={register({ required: true })} name="description"></input>
+                    <trix-editor input="description"></trix-editor>
+                    <span>{errors.description && errors.description.message}</span>
+                    
+                    
+                    <PrimaryButtonMargin type="submit">Salvar</PrimaryButtonMargin>
                 </div>
             </form>
             </MenuCard>
@@ -38,6 +42,9 @@ function NewProjectScreen(){
     );
 }
 
+const PrimaryButtonMargin = styled(PrimaryButton)`
+    margin-top: 10px;
+`
 
 const ProjectDescriptionLabel = styled.div`
     color: #283C46;
@@ -84,6 +91,7 @@ const MenuCard = styled(Card)`
     padding: 20px;
     margin-right: 20px;
     margin-left: 20px;
+    max-width: 300px;
 
     @media(min-width: 800px) {
         width: 800px;
@@ -122,4 +130,4 @@ const ToolTitle = styled.div`
     margin-bottom: 20px;
 `;
 
-export default NewProjectScreen
+export default NewMessageBoardScreen

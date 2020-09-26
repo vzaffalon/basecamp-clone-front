@@ -9,6 +9,8 @@ import ProjectsListScreen from 'projects/ProjectsListScreen'
 import NewProjectScreen from 'projects/NewProjectScreen'
 import ProjectMenuScreen from 'projects/ProjectMenuScreen'
 import MessageBoardListScreen from "projects/message_board/MessageBoardListScreen";
+import NewMessageBoardScreen from "projects/message_board/NewMessageBoardScreen";
+import TodoListScreen from 'projects/todos/TodoListScreen.js';
 
 export default function MainRouter() {
   return (
@@ -27,8 +29,14 @@ export default function MainRouter() {
           <Route path="/new_project">
             <NewProjectScreen></NewProjectScreen>
           </Route>
-          <Route path="/message_board">
+          <Route path="/message_boards">
             <MessageBoardListScreen></MessageBoardListScreen>
+          </Route>
+          <Route path="/new_message_board">
+            <NewMessageBoardScreen></NewMessageBoardScreen>
+          </Route>
+          <Route path="/todo_lists">
+            <TodoListScreen></TodoListScreen>
           </Route>
         </Switch>
       </div>

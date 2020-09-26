@@ -2,38 +2,55 @@ import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
 import { useHistory } from "react-router-dom";
 import { Card, AlignCenter, PrimaryButton, Row } from 'AppStyles';
-import { MessageBoard } from 'models';
+import { useForm } from "react-hook-form";
+import { TodoList } from 'models';
 
-function MessageBoardListScreen(){
+function TodoListScreen(){
     let history = useHistory();
+    const [new_todo_layout_visibility, setNewTodoLayoutVisibility] = useState([]);
 
-    const MessageBoardsList = () => {
-        const [message_boards, setMessageBoards] = useState([]);
+    const TodoListList = () => {
+        const [todo_lists, setTodoLists] = useState([]);
 
-        const getMessageBoards = () => {
-            MessageBoard.list().then( response => {
-                setMessageBoards(response.data)
+        const getTodoListLists = () => {
+            TodoList.list().then( response => {
+                setTodoLists(response.data)
             })
         }
     
         useEffect(() => {
-            getMessageBoards();
+            getTodoListLists();
         },[]);  
     
-            return message_boards.map((message_board) => {
-                const { title, description } = message_board 
+            return todo_lists.map((todo_list) => {
+                const { name } = todo_list 
                 return (
                     <div>
-                        <MessageTitle>{title}</MessageTitle>
-                        <MessageDescription>{description}</MessageDescription>
+                        <MessageTitle>{name}</MessageTitle>
                         <MessageDivider></MessageDivider>
                     </div>)
             }
         )
     }
 
-    const goToNewMessageBoardScreen = () => {
-        history.push("/new_message_board")
+
+    const AddNewTodoListInput = () => {
+        const { register, handleSubmit, watch, errors } = useForm();
+
+        const createNewTodoList = (values) => {
+            TodoList.create(values).then((response) => {
+                history.goBack()
+            })
+        }
+
+        return <form onSubmit={handleSubmit(createNewTodoList)}>
+        <div>
+            <Input type="text" id="name" name="name" ref={register({ required: true })} ></Input>
+            <span>{errors.name && errors.name.message}</span>
+
+            <PrimaryButton type="submit">Adicionar essa lista</PrimaryButton>
+        </div>
+    </form>
     }
 
     return (
@@ -41,7 +58,7 @@ function MessageBoardListScreen(){
             <MenuCard>
                     <RowCenter>
                             <LeftMarginButton>
-                                <ProjectTitle>Meu Mural</ProjectTitle>
+                                <ProjectTitle>Lista de Afazeres</ProjectTitle>
                             </LeftMarginButton>
                             <LeftMarginButton>
                                 <PrimaryButton onClick={(e) => goToNewMessageBoardScreen()}>Novo</PrimaryButton>
@@ -50,7 +67,9 @@ function MessageBoardListScreen(){
                     <AlignCenter>
                         <LineDivider></LineDivider>
                     </AlignCenter>
-                    <MessageBoardsList></MessageBoardsList>
+
+                    <AddNewTodoListInput></AddNewTodoListInput>
+                    <TodoListList></TodoListList>
             </MenuCard>
         </AlignCenter>
     );
@@ -63,6 +82,25 @@ const LeftMarginButton = styled.div`
 const RowCenter = styled(Row)`
     align-items: center;
     justify-content: center;
+`
+
+
+const Input = styled.input`
+    margin-top: 10px;
+    margin-bottom: 10px;
+    max-width: 100%;
+    width: 100%;
+    background-color: #fff;
+    border: 1px solid #d9d9d9;
+    border-radius: 0.4rem;
+    line-height: 1.5;
+    font-family: inherit;
+    font-weight: inherit;
+    font-size: inherit;
+    color: inherit;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    box-sizing: border-box;
 `
 
 
@@ -144,4 +182,4 @@ const ToolTitle = styled.div`
     margin-bottom: 20px;
 `;
 
-export default MessageBoardListScreen
+export default TodoListScreen

@@ -8,9 +8,12 @@ function ProjectMenuScreen(){
     let history = useHistory();
 
     const goToProjectScreen = () => {
-        history.push("/message_board")
+        history.push("/message_boards")
     }
 
+    const goToTodoListScreen = () => {
+        history.push("/todo_lists")
+    }
 
     return (
         <AlignCenterFullHeight>
@@ -22,7 +25,7 @@ function ProjectMenuScreen(){
                             <ToolCard onClick={(e) => goToProjectScreen()}>
                                 <ToolTitle>Meu mural</ToolTitle>
                             </ToolCard>
-                            <ToolCard>
+                            <ToolCard onClick={(e) => goToTodoListScreen()}>
                                 <ToolTitle>Listas To-dos</ToolTitle>
                             </ToolCard>
                         </ResponsiveRow>
