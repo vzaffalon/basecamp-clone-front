@@ -15,6 +15,10 @@ function ProjectMenuScreen(){
         history.push("/todo_lists")
     }
 
+    const goToCalendarScreen = () => {
+        history.push("/calendar")
+    }
+
     return (
         <AlignCenterFullHeight>
             <MenuCard>
@@ -36,8 +40,8 @@ function ProjectMenuScreen(){
                             </ToolCard>
 
                     
-                            <ToolCard>
-                                <ToolTitle>Agenda</ToolTitle>
+                            <ToolCard onClick={(e) => goToCalendarScreen()}>
+                                <ToolTitle >Agenda</ToolTitle>
                             </ToolCard>
                         </ResponsiveRow>
                     </Column>

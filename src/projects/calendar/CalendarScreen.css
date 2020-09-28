@@ -1,0 +1,11 @@
+.fc-toolbar-chunk{
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+}
+
+.fc .fc-toolbar-title{
+    font-size: 1.0em
+}
+
+.fc-scroller {height:100% !important;}

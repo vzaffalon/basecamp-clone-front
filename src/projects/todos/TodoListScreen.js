@@ -1,36 +1,68 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useHistory } from "react-router-dom";
 import { Card, AlignCenter, PrimaryButton, Row } from 'AppStyles';
 import { useForm } from "react-hook-form";
-import { TodoList } from 'models';
+import { TodoList, Todo } from 'models';
 
-function TodoListScreen(){
+function TodoListScreen() {
     let history = useHistory();
-    const [new_todo_layout_visibility, setNewTodoLayoutVisibility] = useState([]);
+    const [new_todo_list_layout_visibility, setNewTodoListLayoutVisibility] = useState(false);
+    const [new_todo_layout_visibility, setNewTodoLayoutVisibility] = useState(false);
+    const [new_todo_list_id, setNewTodoListId] = useState(null);
+    const [todo_lists, setTodoLists] = useState([]);
 
-    const TodoListList = () => {
-        const [todo_lists, setTodoLists] = useState([]);
+    const TodoListList = ({ todo_lists_list = [], createNewTodo }) => {
 
-        const getTodoListLists = () => {
-            TodoList.list().then( response => {
-                setTodoLists(response.data)
+        const AddNewTodoInput = () => {
+            const { register, handleSubmit, watch, errors } = useForm();
+
+
+            return <form onSubmit={handleSubmit(createNewTodo)}>
+                <div>
+                    <Input type="text" id="name" name="name" ref={register({ required: true })} ></Input>
+                    <span>{errors.name && errors.name.message}</span>
+
+                    <PrimaryButton type="submit">Adicionar essa tarefa</PrimaryButton>
+                </div>
+            </form>
+        }
+
+        const updateTodo = (id, done) => {
+            Todo.update({id: id, done: !done}).then((response) => {
+                getTodoListLists();
+                setNewTodoLayoutVisibility(false);
             })
         }
-    
-        useEffect(() => {
-            getTodoListLists();
-        },[]);  
-    
-            return todo_lists.map((todo_list) => {
-                const { name } = todo_list 
+
+
+        
+        return <div>
+                {todo_lists_list.map((todo_list, index) => {
+                const {id, name , done, incomplete, done_size, incomplete_size} = todo_list
                 return (
                     <div>
-                        <MessageTitle>{name}</MessageTitle>
-                        <MessageDivider></MessageDivider>
-                    </div>)
+                <MessageTitle>{name} - Feitas {done.length}/{done.length + incomplete.length}</MessageTitle>
+                {incomplete.map((todo) => {
+                    const { name, done } = todo
+                    return <div><input checked={done}
+                    onChange={() => updateTodo(todo.id, done)} type="checkbox" id="scales" name="scales"></input>
+                        <label>{name}</label></div>
+                })}
+                <PrimaryButton type="submit" onClick={() => {setNewTodoLayoutVisibility(true); setNewTodoListId(id)}}>Adicionar uma tarefa</PrimaryButton>
+                {new_todo_layout_visibility && new_todo_list_id == id && <AddNewTodoInput></AddNewTodoInput>}
+                {done.map((todo) => {
+                    const { name, done } = todo
+                    return <div><input checked={done}
+                    onChange={() => updateTodo(todo.id, done)} type="checkbox" id="scales" name="scales"></input>
+                        <label>{name}</label></div>
+                })}
+                <MessageDivider></MessageDivider>
+            </div>)
             }
         )
+        }
+        </div>
     }
 
 
@@ -39,37 +71,58 @@ function TodoListScreen(){
 
         const createNewTodoList = (values) => {
             TodoList.create(values).then((response) => {
-                history.goBack()
+                getTodoListLists();
+                setNewTodoListLayoutVisibility(false);
             })
         }
 
         return <form onSubmit={handleSubmit(createNewTodoList)}>
-        <div>
-            <Input type="text" id="name" name="name" ref={register({ required: true })} ></Input>
-            <span>{errors.name && errors.name.message}</span>
+            <div>
+                <Input type="text" id="name" name="name" ref={register({ required: true })} ></Input>
+                <span>{errors.name && errors.name.message}</span>
 
-            <PrimaryButton type="submit">Adicionar essa lista</PrimaryButton>
-        </div>
-    </form>
+                <PrimaryButton type="submit">Adicionar essa lista</PrimaryButton>
+            </div>
+        </form>
     }
+
+
+    const getTodoListLists = () => {
+        TodoList.list().then(response => {
+            debugger;
+            setTodoLists(response.data)
+            setNewTodoListLayoutVisibility(false)
+        })
+    }
+
+    const createNewTodo = (values) => {
+        Todo.create({todo_list_id: new_todo_list_id, name: values.name}).then((response) => {
+            getTodoListLists();
+            setNewTodoLayoutVisibility(false);
+        })
+    }
+
+    useEffect(() => {
+        getTodoListLists();
+    }, []);
 
     return (
         <AlignCenter>
             <MenuCard>
-                    <RowCenter>
-                            <LeftMarginButton>
-                                <ProjectTitle>Lista de Afazeres</ProjectTitle>
-                            </LeftMarginButton>
-                            <LeftMarginButton>
-                                <PrimaryButton onClick={(e) => goToNewMessageBoardScreen()}>Novo</PrimaryButton>
-                            </LeftMarginButton>
-                    </RowCenter>
-                    <AlignCenter>
-                        <LineDivider></LineDivider>
-                    </AlignCenter>
+                <RowCenter>
+                    <LeftMarginButton>
+                        <ProjectTitle>To-dos</ProjectTitle>
+                    </LeftMarginButton>
+                    <LeftMarginButton>
+                        <PrimaryButton onClick={(e) => setNewTodoListLayoutVisibility(!new_todo_list_layout_visibility)}>Nova</PrimaryButton>
+                    </LeftMarginButton>
+                </RowCenter>
+                <AlignCenter>
+                    <LineDivider></LineDivider>
+                </AlignCenter>
 
-                    <AddNewTodoListInput></AddNewTodoListInput>
-                    <TodoListList></TodoListList>
+                {new_todo_list_layout_visibility && <AddNewTodoListInput></AddNewTodoListInput>}
+                <TodoListList todo_lists_list={todo_lists} createNewTodo={createNewTodo}></TodoListList>
             </MenuCard>
         </AlignCenter>
     );

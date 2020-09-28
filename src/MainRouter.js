@@ -11,6 +11,7 @@ import ProjectMenuScreen from 'projects/ProjectMenuScreen'
 import MessageBoardListScreen from "projects/message_board/MessageBoardListScreen";
 import NewMessageBoardScreen from "projects/message_board/NewMessageBoardScreen";
 import TodoListScreen from 'projects/todos/TodoListScreen.js';
+import CalendarScreen from 'projects/calendar/CalendarScreen.js';
 
 export default function MainRouter() {
   return (
@@ -37,6 +38,9 @@ export default function MainRouter() {
           </Route>
           <Route path="/todo_lists">
             <TodoListScreen></TodoListScreen>
+          </Route>
+          <Route path="/calendar">
+            <CalendarScreen></CalendarScreen>
           </Route>
         </Switch>
       </div>
