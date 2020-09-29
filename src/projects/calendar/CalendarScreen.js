@@ -50,7 +50,6 @@ function CalendarScreen() {
     }, []);
 
     const handleDateClick = (arg) => { // bind with an arrow function
-        debugger
         setSelectedDay(arg.dateStr)
         getCalendarEvents(arg.dateStr);
     }

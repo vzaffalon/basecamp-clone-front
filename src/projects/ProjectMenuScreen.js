@@ -3,6 +3,10 @@ import styled from 'styled-components';
 import 'App';
 import { useHistory } from "react-router-dom";
 import { Row, Column, Card, AlignCenter } from 'AppStyles';
+import calendar_ic from 'images/calendar_ic.png';
+import docs_ic from 'images/docs_ic.png';
+import message_board_ic from 'images/message_board_ic.png';
+import todo_ic from 'images/todo_ic.png';
 
 function ProjectMenuScreen(){
     let history = useHistory();
@@ -28,20 +32,24 @@ function ProjectMenuScreen(){
                         <ResponsiveRow>
                             <ToolCard onClick={(e) => goToProjectScreen()}>
                                 <ToolTitle>Meu mural</ToolTitle>
+                                <MenuIcon src={message_board_ic} alt="Logo" />
                             </ToolCard>
                             <ToolCard onClick={(e) => goToTodoListScreen()}>
                                 <ToolTitle>Listas To-dos</ToolTitle>
+                                <MenuIcon src={todo_ic} alt="Logo" />
                             </ToolCard>
                         </ResponsiveRow>
 
                         <ResponsiveRow>
                             <ToolCard>
                                 <ToolTitle>Documentos & Arquivos</ToolTitle>
+                                <MenuIcon src={docs_ic} alt="Logo" />
                             </ToolCard>
 
                     
                             <ToolCard onClick={(e) => goToCalendarScreen()}>
-                                <ToolTitle >Agenda</ToolTitle>
+                                <ToolTitle>Agenda</ToolTitle>
+                                <MenuIcon src={calendar_ic} alt="Logo" />
                             </ToolCard>
                         </ResponsiveRow>
                     </Column>
@@ -51,10 +59,15 @@ function ProjectMenuScreen(){
     );
 }
 
+const MenuIcon = styled.img`
+    width: 67px;
+    margin-top: 5px;
+`
+
 const ResponsiveRow = styled(Row)`
-@media(max-width: 800px) {
-  flex-direction: column
-}
+    @media(max-width: 800px) {
+    flex-direction: column
+    }
 `
 
 const AlignCenterFullHeight = styled(AlignCenter)`
@@ -79,6 +92,9 @@ const ToolCard = styled(Card)`
         position: relative;
         width: 240px;
         height: 240px;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
         margin: 2%;
         vertical-align: top;
         font-size: 1.1rem;

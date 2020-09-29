@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useHistory } from "react-router-dom";
-import { Card, AlignCenter, PrimaryButton, Row } from 'AppStyles';
+import { Card, AlignCenter, SecondaryButton, PrimaryButton, Row } from 'AppStyles';
 import { useForm } from "react-hook-form";
 import { TodoList, Todo } from 'models';
 
@@ -20,7 +20,7 @@ function TodoListScreen() {
 
             return <form onSubmit={handleSubmit(createNewTodo)}>
                 <div>
-                    <Input type="text" id="name" name="name" ref={register({ required: true })} ></Input>
+                    <Input type="text" id="name" placeholder="Nome da tarefa" name="name" ref={register({ required: true })} ></Input>
                     <span>{errors.name && errors.name.message}</span>
 
                     <PrimaryButton type="submit">Adicionar essa tarefa</PrimaryButton>
@@ -37,7 +37,7 @@ function TodoListScreen() {
 
 
         
-        return <div>
+        return <AlignLeft>
                 {todo_lists_list.map((todo_list, index) => {
                 const {id, name , done, incomplete, done_size, incomplete_size} = todo_list
                 return (
@@ -45,24 +45,24 @@ function TodoListScreen() {
                 <MessageTitle>{name} - Feitas {done.length}/{done.length + incomplete.length}</MessageTitle>
                 {incomplete.map((todo) => {
                     const { name, done } = todo
-                    return <div><input checked={done}
+                    return <CheckBoxMargin><input checked={done}
                     onChange={() => updateTodo(todo.id, done)} type="checkbox" id="scales" name="scales"></input>
-                        <label>{name}</label></div>
+                        <label>{name}</label></CheckBoxMargin>
                 })}
-                <PrimaryButton type="submit" onClick={() => {setNewTodoLayoutVisibility(true); setNewTodoListId(id)}}>Adicionar uma tarefa</PrimaryButton>
+                <SecondaryButton type="submit" onClick={() => {setNewTodoLayoutVisibility(true); setNewTodoListId(id)}}>Adicionar uma tarefa</SecondaryButton>
                 {new_todo_layout_visibility && new_todo_list_id == id && <AddNewTodoInput></AddNewTodoInput>}
                 {done.map((todo) => {
                     const { name, done } = todo
-                    return <div><input checked={done}
+                    return <CheckBoxMargin><input checked={done}
                     onChange={() => updateTodo(todo.id, done)} type="checkbox" id="scales" name="scales"></input>
-                        <label>{name}</label></div>
+                        <label>{name}</label></CheckBoxMargin>
                 })}
                 <MessageDivider></MessageDivider>
             </div>)
             }
         )
         }
-        </div>
+        </AlignLeft>
     }
 
 
@@ -78,10 +78,10 @@ function TodoListScreen() {
 
         return <form onSubmit={handleSubmit(createNewTodoList)}>
             <div>
-                <Input type="text" id="name" name="name" ref={register({ required: true })} ></Input>
+                <Input type="text" placeholder="Nome da lista" id="name" name="name" ref={register({ required: true })} ></Input>
                 <span>{errors.name && errors.name.message}</span>
 
-                <PrimaryButton type="submit">Adicionar essa lista</PrimaryButton>
+                <SecondaryButton type="submit">Adicionar essa lista</SecondaryButton>
             </div>
         </form>
     }
@@ -89,7 +89,6 @@ function TodoListScreen() {
 
     const getTodoListLists = () => {
         TodoList.list().then(response => {
-            debugger;
             setTodoLists(response.data)
             setNewTodoListLayoutVisibility(false)
         })
@@ -127,6 +126,15 @@ function TodoListScreen() {
         </AlignCenter>
     );
 }
+
+const CheckBoxMargin = styled.div`
+    margin-top: 2px;
+    margin-bottom: 5px;
+`
+
+const AlignLeft = styled.div`
+    text-align: left;
+`
 
 const LeftMarginButton = styled.div`
     margin-left: 10px;

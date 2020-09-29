@@ -10,7 +10,6 @@ function NewProjectScreen(){
     const { register, handleSubmit, watch, errors } = useForm();
 
     const createNewProject = (values) => {
-        debugger;
         Project.create(values).then((response) => {
             history.goBack()
         })
