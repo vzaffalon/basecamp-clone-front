@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import { PrimaryButton, Card } from 'AppStyles'
 import { Column, Row } from 'AppStyles';
 import { Project } from 'models/index.js';
+import { Button } from '@material-ui/core';
 
 const ProjectList = () => {
     let history = useHistory();
@@ -49,14 +50,15 @@ function ProjectsListScreen() {
     return (
         <Container>
             {/* <GlobMargin>
-                <img src="logo.png" alt="Girl in a jacket" width="60" height="60"></img>
+                <img src="logo.png" alt="Girl in a jacket" width="40"></img>
                 <div>
-                    <GlobText>Oi eu sou o Glob</GlobText>
+                    <GlobText>Oi, eu sou o Glob!</GlobText>
                     <GlobDescription>Seu organizador pesssoal</GlobDescription>
                 </div>
             </GlobMargin> */}
             <SpaceBetweenRow>
                 <Flex>
+                    <img src="logo.png" alt="Girl in a jacket" width="55"></img>
                 </Flex>
                 <DoubleFlex>
                     <ProjectsListTitle>Seus Projetos</ProjectsListTitle>
@@ -65,7 +67,9 @@ function ProjectsListScreen() {
                     <RowCenterVertical>
                         <TitleDivider></TitleDivider>
                         <PrimaryButtonMargin>
-                            <PrimaryButton onClick={(e) => goToNewProjectScreen()}>Novo</PrimaryButton>
+                            <Button size="small" onClick={(e) => goToNewProjectScreen()} variant="contained" color="primary">
+                                Novo
+                            </Button>
                         </PrimaryButtonMargin>
                     </RowCenterVertical>
                 </Flex>
@@ -78,25 +82,27 @@ function ProjectsListScreen() {
 }
 
 const GlobText = styled.div`
-    font-size: 20px;
-    margin-top: 5px;
-    text-align: left;
-    margin-left: 10px;
-`;
-
-const GlobDescription = styled.div`
     font-size: 16px;
     margin-top: 5px;
     text-align: left;
     margin-left: 10px;
 `;
 
+const GlobDescription = styled.div`
+    font-size: 14px;
+    margin-top: 5px;
+    text-align: left;
+    margin-left: 10px;
+`;
+
 const GlobMargin = styled.div`
-    margin-top: 30px;
+    margin-top: 15px;
     flex-direction: row;
+    width: 100%;
+    margin-left: 15px;
     display: flex;
     flex: 1;
-    align-items: center;
+    align-items: left;
     color: #283C46;
     font-weight: 500;
 `;

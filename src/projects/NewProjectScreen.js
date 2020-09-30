@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import { Row, Column, Card, AlignCenter, PrimaryButton } from 'AppStyles';
 import { useForm } from "react-hook-form";
 import { Project } from 'models'
+import { Button } from '@material-ui/core';
 
 function NewProjectScreen(){
     let history = useHistory();
@@ -29,7 +30,9 @@ function NewProjectScreen(){
                     <Input type="text" id="description" name="description" ref={register({ required: true })} ></Input>
                     <span>{errors.name && errors.name.message}</span>
         
-                    <PrimaryButton type="submit">Criar projeto</PrimaryButton>
+                    <Button type="submit" variant="contained" color="primary">
+                        Criar projeto
+                    </Button>
                 </div>
             </form>
             </MenuCard>

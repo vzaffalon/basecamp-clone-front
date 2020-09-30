@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import 'App';
 import { useHistory } from "react-router-dom";
 import { Row, Column, Card, AlignCenter } from 'AppStyles';
+import { TextField, Breadcrumbs, Link, Typography, Button } from '@material-ui/core';
 import calendar_ic from 'images/calendar_ic.png';
 import docs_ic from 'images/docs_ic.png';
 import message_board_ic from 'images/message_board_ic.png';
@@ -27,6 +28,14 @@ function ProjectMenuScreen(){
         <AlignCenterFullHeight>
             <MenuCard>
                 <MenuCardMargin>
+                    <BreadcrumbBottomBorder>
+                        <Breadcrumbs aria-label="breadcrumb">
+                                <Link color="inherit" onClick={() => {history.goBack();}}>
+                                    Projetos
+                                </Link>
+                                <Typography color="textPrimary">Menu</Typography>
+                        </Breadcrumbs>
+                    </BreadcrumbBottomBorder>
                     <ProjectTitle>Nome do Projeto</ProjectTitle>
                     <Column>
                         <ResponsiveRow>
@@ -58,6 +67,12 @@ function ProjectMenuScreen(){
         </AlignCenterFullHeight>
     );
 }
+
+const BreadcrumbBottomBorder = styled.div`
+    padding: 15px;
+    border-bottom: 1px solid rgba(0,0,0,0.03);
+`
+
 
 const MenuIcon = styled.img`
     width: 67px;

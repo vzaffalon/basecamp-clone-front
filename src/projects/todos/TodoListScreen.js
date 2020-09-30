@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useHistory } from "react-router-dom";
 import { Card, AlignCenter, SecondaryButton, PrimaryButton, Row } from 'AppStyles';
+import { FormControlLabel, Checkbox, Button, TextField, Breadcrumbs, Link, Typography } from '@material-ui/core';
 import { useForm } from "react-hook-form";
 import { TodoList, Todo } from 'models';
 
@@ -20,16 +21,20 @@ function TodoListScreen() {
 
             return <form onSubmit={handleSubmit(createNewTodo)}>
                 <div>
-                    <Input type="text" id="name" placeholder="Nome da tarefa" name="name" ref={register({ required: true })} ></Input>
-                    <span>{errors.name && errors.name.message}</span>
+                    <TextFieldMargin>
+                        <TextField id="standard-basic" label="Nome da tarefa" id="name" name="name" inputRef={register({ required: true })}  variant="outlined"
+                                size="small" />
+                    </TextFieldMargin>
 
-                    <PrimaryButton type="submit">Adicionar essa tarefa</PrimaryButton>
+                    <Button size="small" type="submit" variant="contained" color="primary">
+                        Adicionar essa tarefa
+                    </Button>
                 </div>
             </form>
         }
 
         const updateTodo = (id, done) => {
-            Todo.update({id: id, done: !done}).then((response) => {
+            Todo.update(id, { done: !done}).then((response) => {
                 getTodoListLists();
                 setNewTodoLayoutVisibility(false);
             })
@@ -39,23 +44,29 @@ function TodoListScreen() {
         
         return <AlignLeft>
                 {todo_lists_list.map((todo_list, index) => {
-                const {id, name , done, incomplete, done_size, incomplete_size} = todo_list
+                const {id, name , done, incomplete} = todo_list
                 return (
                     <div>
                 <MessageTitle>{name} - Feitas {done.length}/{done.length + incomplete.length}</MessageTitle>
                 {incomplete.map((todo) => {
                     const { name, done } = todo
-                    return <CheckBoxMargin><input checked={done}
-                    onChange={() => updateTodo(todo.id, done)} type="checkbox" id="scales" name="scales"></input>
-                        <label>{name}</label></CheckBoxMargin>
+                    return <CheckBoxMargin>
+                           <FormControlLabel
+                                control={<Checkbox checked={done} color="primary" onChange={() => updateTodo(todo.id, done)} name="checkedA" />}
+                                label={name}
+                            />    
+                        </CheckBoxMargin>
                 })}
-                <SecondaryButton type="submit" onClick={() => {setNewTodoLayoutVisibility(true); setNewTodoListId(id)}}>Adicionar uma tarefa</SecondaryButton>
+                 <Button size="small" onClick={() => {setNewTodoLayoutVisibility(!new_todo_layout_visibility); setNewTodoListId(id)}} type="submit" variant="outlined" color="primary">
+                     Adicionar uma tarefa
+                </Button>
                 {new_todo_layout_visibility && new_todo_list_id == id && <AddNewTodoInput></AddNewTodoInput>}
                 {done.map((todo) => {
                     const { name, done } = todo
-                    return <CheckBoxMargin><input checked={done}
-                    onChange={() => updateTodo(todo.id, done)} type="checkbox" id="scales" name="scales"></input>
-                        <label>{name}</label></CheckBoxMargin>
+                    return <CheckBoxMargin> <FormControlLabel
+                    control={<Checkbox checked={done} color="primary" onChange={() => updateTodo(todo.id, done)} name="checkedA" />}
+                    label={name}
+                />   </CheckBoxMargin>
                 })}
                 <MessageDivider></MessageDivider>
             </div>)
@@ -76,12 +87,16 @@ function TodoListScreen() {
             })
         }
 
-        return <form onSubmit={handleSubmit(createNewTodoList)}>
+        return <form onSubmit={handleSubmit(createNewTodoList)} noValidate autoComplete="off">
             <div>
-                <Input type="text" placeholder="Nome da lista" id="name" name="name" ref={register({ required: true })} ></Input>
-                <span>{errors.name && errors.name.message}</span>
+                <TextFieldMargin>
+                    <TextField id="standard-basic" label="Nome da lista" id="name" name="name" inputRef={register({ required: true })}  variant="outlined"
+                            size="small" />
+                </TextFieldMargin>
 
-                <SecondaryButton type="submit">Adicionar essa lista</SecondaryButton>
+                <Button size="small" type="submit" variant="contained" color="primary">
+                    Adicionar essa lista
+                </Button>
             </div>
         </form>
     }
@@ -108,12 +123,25 @@ function TodoListScreen() {
     return (
         <AlignCenter>
             <MenuCard>
+                <BreadcrumbBottomBorder>
+                    <Breadcrumbs aria-label="breadcrumb">
+                        <Link color="inherit" onClick={() => {history.goBack(); history.goBack();}}>
+                            Projetos
+                        </Link>
+                        <Link color="inherit" onClick={() => {history.goBack()}}>
+                            Menu
+                        </Link>
+                        <Typography color="textPrimary">Todos</Typography>
+                    </Breadcrumbs>
+                </BreadcrumbBottomBorder>
                 <RowCenter>
                     <LeftMarginButton>
                         <ProjectTitle>To-dos</ProjectTitle>
                     </LeftMarginButton>
                     <LeftMarginButton>
-                        <PrimaryButton onClick={(e) => setNewTodoListLayoutVisibility(!new_todo_list_layout_visibility)}>Nova</PrimaryButton>
+                        <Button size="small" onClick={(e) => setNewTodoListLayoutVisibility(!new_todo_list_layout_visibility)} variant="contained" color="primary">
+                            Nova
+                        </Button>
                     </LeftMarginButton>
                 </RowCenter>
                 <AlignCenter>
@@ -127,9 +155,17 @@ function TodoListScreen() {
     );
 }
 
+const BreadcrumbBottomBorder = styled.div`
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(0,0,0,0.03);
+`
+
+const TextFieldMargin = styled.div`
+    margin-top: 20px;
+    margin-bottom: 10px;
+`
+
 const CheckBoxMargin = styled.div`
-    margin-top: 2px;
-    margin-bottom: 5px;
 `
 
 const AlignLeft = styled.div`
@@ -187,6 +223,7 @@ const MessageDescription = styled.div`
 
 const MessageDivider = styled.div`
     height: 1px;
+    margin-top: 5px;
     background-color: #f2f2f2;
 `
 

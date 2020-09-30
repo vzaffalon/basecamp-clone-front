@@ -21,9 +21,9 @@ const create = async (payload) => {
     });
 }
 
-const update = async (payload) => {
+const update = async (id, payload) => {
     return new Promise(async (resolve, reject) => {
-        resolve(axios.patch(`${api.uri}${model_uri}`,payload));
+        resolve(axios.patch(`${api.uri}${model_uri}${id}`,payload));
     });
 }
 

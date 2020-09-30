@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import 'App';
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { Row, Column, Card, AlignCenter, PrimaryButton } from 'AppStyles';
 import { TextField, Breadcrumbs, Link, Typography, Button } from '@material-ui/core';
 import { useForm } from "react-hook-form";
@@ -12,13 +12,29 @@ import 'trix/dist/trix.css';
 function NewMessageBoardScreen(){
     let history = useHistory();
     const { register, handleSubmit, watch, errors } = useForm();
+    const [message, setMessage] = useState(null)
+    const location = useLocation();
 
-    const createNewMessageBoard = (values) => {
-        MessageBoard.create(values).then((response) => {
+    const editMessageBoard = (values) => {
+        const { id } = location.state
+        MessageBoard.update(id,values).then((response) => {
             history.goBack()
         })
     }
 
+    const getMessage = () => {
+        const { id } = location.state
+        MessageBoard.show(id).then((response) => {
+            setMessage(response.data)
+        })
+    }
+
+    useEffect(() => {
+        getMessage()
+    },[])
+
+
+    console.log(message)
     return (
         <AlignCenterFullHeight>
             <MenuCard>
@@ -33,20 +49,19 @@ function NewMessageBoardScreen(){
                             <Link color="inherit" onClick={() => {history.goBack()}}>
                                 Mural
                             </Link>
-                            <Typography color="textPrimary">Novo</Typography>
+                            <Typography color="textPrimary">Editar</Typography>
                     </Breadcrumbs>
                 </BreadcrumbBottomBorder>
-            <form onSubmit={handleSubmit(createNewMessageBoard)}>
+            {message && <form onSubmit={handleSubmit(editMessageBoard)}>
                 <div>
                     <TextFieldMargin>
                         <TextField fullWidth id="standard-basic" label="Titulo" id="title" name="title" inputRef={register({ required: true })}  variant="outlined"
-                                    size="small" />
+                                    size="small" defaultValue={message.title} />
                     </TextFieldMargin>
 
                     <ProjectDescriptionLabel>Descrição</ProjectDescriptionLabel>
-                    <input id="description" type="hidden" ref={register({ required: true })} name="description"></input>
+                    <input id="description" value={message.description} type="hidden" ref={register({ required: true })} name="description"></input>
                     <trix-editor input="description"></trix-editor>
-                    <span>{errors.description && errors.description.message}</span>
                     
                     <PrimaryButtonMargin>
                         <Button type="submit" variant="contained" color="primary">
@@ -54,7 +69,7 @@ function NewMessageBoardScreen(){
                         </Button>
                     </PrimaryButtonMargin>
                 </div>
-            </form>
+            </form>}
             </MenuCard>
         </AlignCenterFullHeight>
     );

@@ -1,78 +1,81 @@
+
+
+
+
+
 import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
 import { useHistory } from "react-router-dom";
 import { Card, AlignCenter, PrimaryButton, Row } from 'AppStyles';
 import { MessageBoard } from 'models';
 import { Button, Breadcrumbs, Link, Typography } from '@material-ui/core';
+import { useLocation } from "react-router-dom";
 
-function MessageBoardListScreen(){
+function ShowMessageBoardScreen(){
     let history = useHistory();
+    const [message, setMessage] = useState(null)
+    const location = useLocation();
 
-    const MessageBoardsList = () => {
-        const [message_boards, setMessageBoards] = useState([]);
-
-        const getMessageBoards = () => {
-            MessageBoard.list().then( response => {
-                setMessageBoards(response.data)
-            })
-        }
-
-        const goToShowMessageBoardScreen = (id) => {
-            history.push("/show_message_board", { id: id })
-        }
-    
-        useEffect(() => {
-            getMessageBoards();
-        },[]);  
-    
-            return message_boards.map((message_board) => {
-                const { title, description, id } = message_board 
-                return (
-                    <a onClick={() => {goToShowMessageBoardScreen(id)}}>
-                        <MessageTitle>{title}</MessageTitle>
-                        <MessageDescription dangerouslySetInnerHTML={{__html: description}}></MessageDescription>
-                        <MessageDivider></MessageDivider>
-                    </a>)
-            }
-        )
+    const getMessage = () => {
+        const { id } = location.state
+        MessageBoard.show(id).then((response) => {
+            setMessage(response.data)
+        })
     }
 
-    const goToNewMessageBoardScreen = () => {
-        history.push("/new_message_board")
+    const goToEditMessageBoardScreen = () => {
+        const { id } = location.state
+        history.push('/edit_message_board', { id: id })
     }
+
+    useEffect(() => {
+        getMessage()
+    },[])
 
     return (
         <AlignCenter>
             <MenuCard>
             <BreadcrumbBottomBorder>
                     <Breadcrumbs aria-label="breadcrumb">
-                        <Link color="inherit" onClick={() => {history.goBack(); history.goBack();}}>
+                        <Link color="inherit" onClick={() => {history.goBack(); history.goBack(); history.goBack();}}>
                             Projetos
                         </Link>
-                        <Link color="inherit" onClick={() => {history.goBack()}}>
+                        <Link color="inherit" onClick={() => {history.goBack(); history.goBack()}}>
                             Menu
                         </Link>
-                        <Typography color="textPrimary">Mural</Typography>
+                        <Link color="inherit" onClick={() => {history.goBack()}}>
+                            Mural
+                        </Link>
+                        <Typography color="textPrimary">Mensagem</Typography>
                     </Breadcrumbs>
                 </BreadcrumbBottomBorder>
-                    <RowCenter>
-                            <LeftMarginButton>
-                                <ProjectTitle>Meu Mural</ProjectTitle>
-                            </LeftMarginButton>
-                            <LeftMarginButton>
-                                <Button size="small" onClick={(e) => goToNewMessageBoardScreen()} variant="contained" color="primary">
-                                    Novo
-                                </Button>
-                            </LeftMarginButton>
+                    {message && <div><RowCenter>
+                        <ProjectTitle>{message.title}</ProjectTitle>
+                        <ButtonMargin>
+                            <Button size="small" onClick={() => {goToEditMessageBoardScreen()}} variant="contained" color="primary">
+                                Editar
+                            </Button>
+                        </ButtonMargin>
                     </RowCenter>
                     <AlignCenter>
                         <LineDivider></LineDivider>
                     </AlignCenter>
-                    <MessageBoardsList></MessageBoardsList>
+                    <MessageMargin>
+                        <MessageDescription dangerouslySetInnerHTML={{__html: message.description}}></MessageDescription>
+                    </MessageMargin>
+                    </div>}
             </MenuCard>
         </AlignCenter>
     );
 }
+
+const ButtonMargin = styled.div`
+    margin-left: 10px;
+`
+
+const MessageMargin = styled.div`
+    margin-top: 15px;
+`
 
 const BreadcrumbBottomBorder = styled.div`
     padding-bottom: 10px;
@@ -156,6 +159,7 @@ const ProjectTitle = styled.div`
     text-align: center;
     margin-top: 20px;
     margin-bottom: 20px;
+    margin-left: 30px;
 `;
 
 const ToolTitle = styled.div`
@@ -167,4 +171,4 @@ const ToolTitle = styled.div`
     margin-bottom: 20px;
 `;
 
-export default MessageBoardListScreen
+export default ShowMessageBoardScreen

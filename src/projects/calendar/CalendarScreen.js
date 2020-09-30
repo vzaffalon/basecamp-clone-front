@@ -7,6 +7,7 @@ import { CalendarEvent } from 'models';
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from "@fullcalendar/interaction"; // needed for dayClick
+import { TextField, Breadcrumbs, Link, Typography, Button } from '@material-ui/core';
 import './CalendarScreen.css';
 import dayjs from 'dayjs';
 
@@ -23,10 +24,14 @@ function CalendarScreen() {
         return <form onSubmit={handleSubmit(createNewCalendarEvent)}>
             <div>
                 <AddEventLabel>Adicionar evento no dia {dayjs(selected_day).format('DD/MM')}</AddEventLabel>
-                <Input placeholder="Nome do evento" type="text" id="name" name="name" ref={register({ required: true })} ></Input>
-                <span>{errors.name && errors.name.message}</span>
+                <TextFieldMargin>
+                        <TextField fullWidth id="standard-basic" label="Nome do evento" id="name" name="name" inputRef={register({ required: true })}  variant="outlined"
+                                    size="small" />
+                </TextFieldMargin>
 
-                <PrimaryButton type="submit">Adicionar esse evento</PrimaryButton>
+                <Button size="small" type="submit" variant="contained" color="primary">
+                    Adicionar esse evento
+                </Button>
             </div>
         </form>
     }
@@ -57,12 +62,25 @@ function CalendarScreen() {
     return (
         <AlignCenter>
             <MenuCard>
+                <BreadcrumbBottomBorder>
+                        <Breadcrumbs aria-label="breadcrumb">
+                                <Link color="inherit" onClick={() => {history.goBack(); history.goBack();}}>
+                                    Projetos
+                                </Link>
+                                <Link color="inherit" onClick={() => {history.goBack();}}>
+                                    Menu
+                                </Link>
+                                <Typography color="textPrimary">Calendário</Typography>
+                        </Breadcrumbs>
+                    </BreadcrumbBottomBorder>
                 <RowCenter>
                     <LeftMarginButton>
                         <ProjectTitle>Calendário</ProjectTitle>
                     </LeftMarginButton>
                     <LeftMarginButton>
-                        <PrimaryButton onClick={() => setNewCalendarEventLayoutVisibility(true)}>Adicionar evento</PrimaryButton>
+                        <Button size="small" onClick={() => setNewCalendarEventLayoutVisibility(true)} variant="contained" color="primary">
+                            Adicionar evento
+                        </Button>
                     </LeftMarginButton>
                 </RowCenter>
                 <AlignCenter>
@@ -71,8 +89,18 @@ function CalendarScreen() {
                 <FullCalendar
                plugins={[ dayGridPlugin, interactionPlugin ]}
                 initialView="dayGridMonth"
-                selectable={true}
+                selectable
                 events={calendar_events}
+                locale='BR'
+                buttonText={
+                    {
+                        today:    'hoje',
+                        month:    'mês',
+                        week:     'semana',
+                        day:      'dia',
+                        list:     'lista'
+                      }}
+                
                   dateClick={handleDateClick}
                 />
                 {new_calendar_event_layout_visibility && <AddNewCalendarEventLayout></AddNewCalendarEventLayout>}
@@ -89,6 +117,16 @@ function CalendarScreen() {
 }
 
 
+const TextFieldMargin = styled.div`
+    margin-bottom: 20px;
+    margin-top: 10px;
+    text-align: left;
+`
+
+const BreadcrumbBottomBorder = styled.div`
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(0,0,0,0.03);
+`
 
 const AddEventLabel = styled.div`
     text-align: left;
@@ -96,31 +134,33 @@ const AddEventLabel = styled.div`
     text-transform: uppercase;
     font-size: 12px;
     margin-top: 15px;
-    margin-bottom: -5px;
+    margin-bottom: 15px;
 `
 
 
 const DescriptionLabel = styled.div`
     font-weight: normal;
-    text-transform: uppercase;
-    font-size: 12px;
-    margin-top: 10px;
+    font-size: 16px;
+    margin-top: 15px;
+    font-weight: 600;
 `
 
 
 
 const DayLabel = styled.div`
     text-align: left;
-    font-weight: normal;
+    font-weight: 500;
     text-transform: uppercase;
-    font-size: 0.75em;
-    margin-top: 10px;
+    font-size: 0.85em;
+    margin-top: 20px;
+    color: #6d6d6d;
 `
 
 const NameLabel = styled.div`
     text-align: left;
-    font-size: 0.85em;
+    font-size: 0.95em;
     margin-top: 5px;
+    font-weight: 500;
 `
 
 
