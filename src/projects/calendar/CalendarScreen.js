@@ -48,7 +48,8 @@ function CalendarScreen() {
 
 
     const getCalendarEvents = (date) => {
-        CalendarEvent.list({start_at: date}).then(response => {
+        const { id } = location.state
+        CalendarEvent.list({start_at: date, project_id: id}).then(response => {
             setCalendarEvents(response.data)
         })
     }

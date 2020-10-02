@@ -13,7 +13,8 @@ function MessageBoardListScreen(){
         const [message_boards, setMessageBoards] = useState([]);
 
         const getMessageBoards = () => {
-            MessageBoard.list().then( response => {
+            const { id } = location.state
+            MessageBoard.list({project_id: id}).then( response => {
                 setMessageBoards(response.data)
             })
         }

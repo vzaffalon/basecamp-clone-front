@@ -8,6 +8,7 @@ import { TodoList, Todo } from 'models';
 
 function TodoListScreen() {
     let history = useHistory();
+    const location = useLocation();
     const [new_todo_list_layout_visibility, setNewTodoListLayoutVisibility] = useState(false);
     const [new_todo_layout_visibility, setNewTodoLayoutVisibility] = useState(false);
     const [new_todo_list_id, setNewTodoListId] = useState(null);
@@ -106,7 +107,8 @@ function TodoListScreen() {
 
 
     const getTodoListLists = () => {
-        TodoList.list().then(response => {
+        const { id } = location.state
+        TodoList.list({project_id: id}).then(response => {
             setTodoLists(response.data)
             setNewTodoListLayoutVisibility(false)
         })

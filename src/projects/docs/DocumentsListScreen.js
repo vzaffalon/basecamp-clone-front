@@ -28,7 +28,8 @@ function DocumentsListScreen() {
     },[])
 
     const getDocuments = () => {
-        Document.list().then((response) => {
+        const { id } = location.state
+        Document.list({project_id: id}).then((response) => {
             setDocuments(response.data)
         })
     }
