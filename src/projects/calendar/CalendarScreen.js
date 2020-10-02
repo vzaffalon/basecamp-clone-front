@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { Card, AlignCenter, PrimaryButton, Row } from 'AppStyles';
 import { useForm } from "react-hook-form";
 import { CalendarEvent } from 'models';
@@ -16,6 +16,7 @@ function CalendarScreen() {
     const [calendar_events, setCalendarEvents] = useState([]);
     const [new_calendar_event_layout_visibility, setNewCalendarEventLayoutVisibility] = useState(false);
     const [selected_day, setSelectedDay] = useState(dayjs().format('YYYY-MM-DD'));
+    const location = useLocation();
 
     const AddNewCalendarEventLayout = () => {
         const { register, handleSubmit, watch, errors } = useForm();
@@ -37,6 +38,8 @@ function CalendarScreen() {
     }
 
     const createNewCalendarEvent = (values) => {
+        const { id } = location.state
+        values.project_id = id
         CalendarEvent.create({name: values.name, day: selected_day}).then((response) => {
             getCalendarEvents();
             setNewCalendarEventLayoutVisibility(false);

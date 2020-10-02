@@ -1,9 +1,37 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import MainRouter from 'MainRouter';
+import axios from 'axios';
+
+
+const setAxiosInterceptor = () => {
+  let token = localStorage.getItem('token')
+  if(token){
+    axios.interceptors.request.use(
+      async (config) => {
+       config.headers.Authorization = `Bearer ${token}`;
+        return config;
+      },
+      (error) => {
+        return Promise.reject(error);
+      }
+    );
+  }
+}
 
 
 function App() {
+  const [finished_load, setFinishedLoading] = useState(false)
+
+  useEffect(() => {
+    setAxiosInterceptor()
+    setFinishedLoading(true)
+  },[])
+
+  if(!finished_load){
+    return <div></div>
+  }
+
   return (
     <AppContainer>
       <ApplicationBackground>

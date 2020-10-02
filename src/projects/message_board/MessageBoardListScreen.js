@@ -1,12 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
-import { useHistory } from "react-router-dom";
+import { useHistory,useLocation } from "react-router-dom";
 import { Card, AlignCenter, PrimaryButton, Row } from 'AppStyles';
 import { MessageBoard } from 'models';
 import { Button, Breadcrumbs, Link, Typography } from '@material-ui/core';
 
 function MessageBoardListScreen(){
     let history = useHistory();
+    const location = useLocation();
 
     const MessageBoardsList = () => {
         const [message_boards, setMessageBoards] = useState([]);
@@ -38,7 +39,8 @@ function MessageBoardListScreen(){
     }
 
     const goToNewMessageBoardScreen = () => {
-        history.push("/new_message_board")
+        const { id } = location.state
+        history.push("/new_message_board", {id: id})
     }
 
     return (

@@ -1,7 +1,7 @@
 import api from './ApiConsts.js';
 import axios from 'axios';
 
-const model_uri = "projects/"
+const model_uri = "documents/"
 
 const show = async (id) => {
     return new Promise(async (resolve, reject) => {
@@ -15,7 +15,31 @@ const list = async (params) => {
     });
 }
 
-const create = async (payload) => {
+// const create = async (payload) => {
+//     return new Promise(async (resolve, reject) => {
+//         resolve(axios.post(`${api.uri}${model_uri}`,payload));
+//     });
+// }
+
+
+const create = async (media, params, callback, onError) => {
+    const body = new FormData();
+    body.append("file", media);
+    body.append("name", params.name);
+    body.append("notes", params.notes);
+    return await axios
+      .post(api.uri + "documents/", body, {
+        onUploadProgress: (progressEvent) => callback(progressEvent, media),
+      })
+      .then((res) => {
+        return res.data;
+      })
+      .catch((error) => {
+        return onError(error);
+      });
+  };
+
+const create_list = async (payload) => {
     return new Promise(async (resolve, reject) => {
         resolve(axios.post(`${api.uri}${model_uri}`,payload));
     });

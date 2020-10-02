@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { Row, Column, Card, AlignCenter, PrimaryButton } from 'AppStyles';
 import { useForm } from "react-hook-form";
 import { Project } from 'models'
-import { Button } from '@material-ui/core';
+import { Button, Breadcrumbs, Link, Typography,TextField } from '@material-ui/core';
 
 function NewProjectScreen(){
     let history = useHistory();
@@ -20,15 +20,27 @@ function NewProjectScreen(){
     return (
         <AlignCenterFullHeight>
             <MenuCard>
+            <BreadcrumbBottomBorder>
+                    <Breadcrumbs aria-label="breadcrumb">
+                            <Link color="inherit" onClick={() => {history.goBack(); history.goBack(); history.goBack();}}>
+                                Projetos
+                            </Link>
+                            <Typography color="textPrimary">Novo</Typography>
+                    </Breadcrumbs>
+                </BreadcrumbBottomBorder>
             <NewProjectTitle>Qual o nome do projeto?</NewProjectTitle>
             <form onSubmit={handleSubmit(createNewProject)}>
                 <div>
-                    <Input type="text" id="name" name="name" ref={register({ required: true })} ></Input>
-                    <span>{errors.name && errors.name.message}</span>
 
-                    <ProjectDescriptionLabel>Descrição do projeto</ProjectDescriptionLabel>
-                    <Input type="text" id="description" name="description" ref={register({ required: true })} ></Input>
-                    <span>{errors.name && errors.name.message}</span>
+                    <TextFieldMargin>
+                        <TextField fullWidth id="standard-basic" label="Nome" id="name" name="name" inputRef={register({ required: true })}  variant="outlined"
+                                    size="small"/>
+                    </TextFieldMargin>
+
+                    <TextFieldMargin>
+                        <TextField fullWidth id="standard-basic" label="Descrição" id="description" name="description" inputRef={register({ required: true })}  variant="outlined"
+                                    size="small" />
+                    </TextFieldMargin>
         
                     <Button type="submit" variant="contained" color="primary">
                         Criar projeto
@@ -40,6 +52,16 @@ function NewProjectScreen(){
     );
 }
 
+const BreadcrumbBottomBorder = styled.div`
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(0,0,0,0.03);
+`
+
+const TextFieldMargin = styled.div`
+    margin-bottom: 20px;
+    margin-top: 10px;
+    text-align: left;
+`
 
 const ProjectDescriptionLabel = styled.div`
     color: #283C46;
@@ -53,6 +75,8 @@ const NewProjectTitle = styled.div`
     color: #283C46;
     font-weight: 500;
     font-size: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     text-align: left;
 `
 
@@ -86,6 +110,7 @@ const MenuCard = styled(Card)`
     padding: 20px;
     margin-right: 20px;
     margin-left: 20px;
+    min-width: 300px;
 
     @media(min-width: 800px) {
         width: 800px;

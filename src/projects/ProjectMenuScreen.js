@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import 'App';
 import { useHistory } from "react-router-dom";
 import { Row, Column, Card, AlignCenter } from 'AppStyles';
+import { useLocation } from "react-router-dom";
 import { TextField, Breadcrumbs, Link, Typography, Button } from '@material-ui/core';
 import calendar_ic from 'images/calendar_ic.png';
 import docs_ic from 'images/docs_ic.png';
@@ -11,17 +12,23 @@ import todo_ic from 'images/todo_ic.png';
 
 function ProjectMenuScreen(){
     let history = useHistory();
+    const location = useLocation();
+    const { id } = location.state
 
     const goToProjectScreen = () => {
-        history.push("/message_boards")
+        history.push("/message_boards", {id: id})
     }
 
     const goToTodoListScreen = () => {
-        history.push("/todo_lists")
+        history.push("/todo_lists", {id: id})
     }
 
     const goToCalendarScreen = () => {
-        history.push("/calendar")
+        history.push("/calendar", {id: id})
+    }
+
+    const goToDocumentsScreen = () => {
+        history.push("/documents", {id: id})
     }
 
     return (
@@ -50,7 +57,7 @@ function ProjectMenuScreen(){
                         </ResponsiveRow>
 
                         <ResponsiveRow>
-                            <ToolCard>
+                            <ToolCard onClick={(e) => goToDocumentsScreen()}>
                                 <ToolTitle>Documentos & Arquivos</ToolTitle>
                                 <MenuIcon src={docs_ic} alt="Logo" />
                             </ToolCard>

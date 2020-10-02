@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import 'App';
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { Row, Column, Card, AlignCenter, PrimaryButton } from 'AppStyles';
 import { TextField, Breadcrumbs, Link, Typography, Button } from '@material-ui/core';
 import { useForm } from "react-hook-form";
@@ -11,9 +11,12 @@ import 'trix/dist/trix.css';
 
 function NewMessageBoardScreen(){
     let history = useHistory();
+    const location = useLocation();
     const { register, handleSubmit, watch, errors } = useForm();
 
     const createNewMessageBoard = (values) => {
+        const { id } = location.state
+        values.project_id = id
         MessageBoard.create(values).then((response) => {
             history.goBack()
         })

@@ -5,6 +5,7 @@ import { PrimaryButton, Card } from 'AppStyles'
 import { Column, Row } from 'AppStyles';
 import { Project } from 'models/index.js';
 import { Button } from '@material-ui/core';
+import MoreHorizOutlinedIcon from '@material-ui/icons/MoreHorizOutlined';
 
 const ProjectList = () => {
     let history = useHistory();
@@ -21,17 +22,26 @@ const ProjectList = () => {
         getProjects();
     },[]);    
 
-    const goToProjectScreen = () => {
-        history.push("/project_menu")
+    const goToProjectScreen = (id) => {
+        history.push("/project_menu", {id: id})
+    }
+
+    const goToEditProjectScreen = (id) => {
+        history.push("/edit_project", {id: id})
     }
 
 
     return <div>
             {projects.map((project) => {
                 const {name, description } = project
-                return <MenuCard onClick={(e) => goToProjectScreen()}>
+                return <MenuCard onClick={(e) => goToProjectScreen(project.id)}>
                         <CardContainer>
-                            <CardTitle>{name}</CardTitle>
+                            <TitleSpaceBetween>
+                                <CardTitle>{name}</CardTitle>
+                                <EditLink onClick={(e) => { e.stopPropagation();goToEditProjectScreen(project.id)}}>
+                                    <MoreHorizOutlinedIcon style={{ color: "#bdbdbd" }} />
+                                </EditLink>
+                            </TitleSpaceBetween>
                             <CardDescription>{description}</CardDescription>
                         </CardContainer>
                 </MenuCard>
@@ -80,6 +90,17 @@ function ProjectsListScreen() {
         </Container>
     );
 }
+
+const EditLink = styled.a`
+    padding: 20px;
+    margin: -20px;
+`
+
+const TitleSpaceBetween = styled.div`
+    justify-content: space-between;
+    flex-direction: row;
+    display: flex;
+`
 
 const GlobText = styled.div`
     font-size: 16px;

@@ -14,6 +14,10 @@ import TodoListScreen from 'projects/todos/TodoListScreen.js';
 import CalendarScreen from 'projects/calendar/CalendarScreen.js';
 import ShowMessageBoardScreen from "projects/message_board/ShowMessageBoardScreen";
 import EditMessageBoardScreen from "projects/message_board/EditMessageBoardScreen";
+import EditProjectScreen from "projects/EditProjectScreen";
+import DocumentsListScreen from "projects/docs/DocumentsListScreen";
+import LoginScreen from 'login/LoginScreen';
+import RegisterScreen from 'login/RegisterScreen';
 
 export default function MainRouter() {
   return (
@@ -24,10 +28,22 @@ export default function MainRouter() {
             renders the first one that matches the current URL. */}
         <Switch>
           <Route exact path="/">
+            <LoginScreen></LoginScreen>
+          </Route>
+          <Route exact path="/login">
+            <LoginScreen></LoginScreen>
+          </Route>
+          <Route exact path="/register">
+            <RegisterScreen></RegisterScreen>
+          </Route>
+          <Route exact path="/projects">
             <ProjectsListScreen></ProjectsListScreen>
           </Route>
           <Route path="/project_menu">
             <ProjectMenuScreen></ProjectMenuScreen>
+          </Route>
+          <Route path="/edit_project">
+            <EditProjectScreen></EditProjectScreen>
           </Route>
           <Route path="/new_project">
             <NewProjectScreen></NewProjectScreen>
@@ -46,6 +62,9 @@ export default function MainRouter() {
           </Route>
           <Route path="/todo_lists">
             <TodoListScreen></TodoListScreen>
+          </Route>
+          <Route path="/documents">
+            <DocumentsListScreen></DocumentsListScreen>
           </Route>
           <Route path="/calendar">
             <CalendarScreen></CalendarScreen>

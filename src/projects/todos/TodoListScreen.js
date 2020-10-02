@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { Card, AlignCenter, SecondaryButton, PrimaryButton, Row } from 'AppStyles';
 import { FormControlLabel, Checkbox, Button, TextField, Breadcrumbs, Link, Typography } from '@material-ui/core';
 import { useForm } from "react-hook-form";
@@ -34,7 +34,7 @@ function TodoListScreen() {
         }
 
         const updateTodo = (id, done) => {
-            Todo.update(id, { done: !done}).then((response) => {
+            Todo.update(id, { done: !done }).then((response) => {
                 getTodoListLists();
                 setNewTodoLayoutVisibility(false);
             })
@@ -79,8 +79,11 @@ function TodoListScreen() {
 
     const AddNewTodoListInput = () => {
         const { register, handleSubmit, watch, errors } = useForm();
+        const location = useLocation();
 
         const createNewTodoList = (values) => {
+            const { id } = location.state
+            values.project_id = id
             TodoList.create(values).then((response) => {
                 getTodoListLists();
                 setNewTodoListLayoutVisibility(false);
