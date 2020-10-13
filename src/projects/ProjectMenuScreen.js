@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import 'App';
 import { useHistory } from "react-router-dom";
 import { Row, Column, Card, AlignCenter } from 'AppStyles';
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { TextField, Breadcrumbs, Link, Typography, Button } from '@material-ui/core';
 import calendar_ic from 'images/calendar_ic.png';
 import docs_ic from 'images/docs_ic.png';
@@ -12,23 +12,23 @@ import todo_ic from 'images/todo_ic.png';
 
 function ProjectMenuScreen(){
     let history = useHistory();
-    const location = useLocation();
-    const { id } = location.state
+   let params = useParams();
+    const { id } = params
 
-    const goToProjectScreen = () => {
-        history.push("/message_boards", {id: id})
+    const goToMessageBoardsScreen = () => {
+        history.push(`/projects/${id}/message_boards`)
     }
 
     const goToTodoListScreen = () => {
-        history.push("/todo_lists", {id: id})
+        history.push(`/projects/${id}/todo_lists`)
     }
 
     const goToCalendarScreen = () => {
-        history.push("/calendar", {id: id})
+        history.push(`/projects/${id}/calendar`)
     }
 
     const goToDocumentsScreen = () => {
-        history.push("/documents", {id: id})
+        history.push(`/projects/${id}/documents`)
     }
 
     return (
@@ -46,7 +46,7 @@ function ProjectMenuScreen(){
                     <ProjectTitle>Nome do Projeto</ProjectTitle>
                     <Column>
                         <ResponsiveRow>
-                            <ToolCard onClick={(e) => goToProjectScreen()}>
+                            <ToolCard onClick={(e) => goToMessageBoardsScreen()}>
                                 <ToolTitle>Meu mural</ToolTitle>
                                 <MenuIcon src={message_board_ic} alt="Logo" />
                             </ToolCard>

@@ -27,9 +27,16 @@ const update = async (id,payload) => {
     });
 }
 
+const destroy = async (id) => {
+    return new Promise(async (resolve, reject) => {
+        resolve(axios.delete(`${api.uri}${model_uri}${id}`));
+    });
+}
+
 export default { 
     show,
     list,
     create,
     update,
+    destroy,
 }

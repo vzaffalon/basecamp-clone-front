@@ -1,47 +1,54 @@
 import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
-import { useHistory,useLocation } from "react-router-dom";
+import { useHistory,useParams } from "react-router-dom";
 import { Card, AlignCenter, PrimaryButton, Row } from 'AppStyles';
 import { MessageBoard } from 'models';
-import { Button, Breadcrumbs, Link, Typography } from '@material-ui/core';
+import { Button, Breadcrumbs, Link, Typography, CircularProgress } from '@material-ui/core';
 
 function MessageBoardListScreen(){
     let history = useHistory();
-    const location = useLocation();
+   let params = useParams();
 
     const MessageBoardsList = () => {
         const [message_boards, setMessageBoards] = useState([]);
+        const [loading,setLoading] = useState(true);
 
         const getMessageBoards = () => {
-            const { id } = location.state
+            const { id } = params
+            setLoading(true)
             MessageBoard.list({project_id: id}).then( response => {
                 setMessageBoards(response.data)
+                setLoading(false)
             })
         }
 
         const goToShowMessageBoardScreen = (id) => {
-            history.push("/show_message_board", { id: id })
+            history.push(`/message_boards/${id}/show_message_board`)
         }
     
         useEffect(() => {
             getMessageBoards();
         },[]);  
+
+        if(loading){
+            return <CircularProgress />
+        }
     
-            return message_boards.map((message_board) => {
+            return <div>{message_boards.length > 0 ? message_boards.map((message_board) => {
                 const { title, description, id } = message_board 
                 return (
                     <a onClick={() => {goToShowMessageBoardScreen(id)}}>
                         <MessageTitle>{title}</MessageTitle>
-                        <MessageDescription dangerouslySetInnerHTML={{__html: description}}></MessageDescription>
+                        <MessageDescription dangerouslySetInnerHTML={{__html: description.substring(0,90) + "..."}}></MessageDescription>
                         <MessageDivider></MessageDivider>
                     </a>)
             }
-        )
+        ) : <div>Adicione seu primeiro projeto</div>}</div>
     }
 
     const goToNewMessageBoardScreen = () => {
-        const { id } = location.state
-        history.push("/new_message_board", {id: id})
+        const { id } = params
+        history.push(`projects/${id}/new_message_board`)
     }
 
     return (

@@ -4,17 +4,20 @@ import { useHistory } from "react-router-dom";
 import { PrimaryButton, Card } from 'AppStyles'
 import { Column, Row } from 'AppStyles';
 import { Project } from 'models/index.js';
-import { Button } from '@material-ui/core';
+import { Button, CircularProgress } from '@material-ui/core';
 import MoreHorizOutlinedIcon from '@material-ui/icons/MoreHorizOutlined';
 
 const ProjectList = () => {
     let history = useHistory();
     const [projects, setProjects] = useState([]);
+    const [loading,setLoading] = useState(true);
     
 
     const getProjects = () => {
+        setLoading(true)
         Project.list().then( response => {
             setProjects(response.data)
+            setLoading(false)
         })
     }
 
@@ -23,16 +26,20 @@ const ProjectList = () => {
     },[]);    
 
     const goToProjectScreen = (id) => {
-        history.push("/project_menu", {id: id})
+        history.push(`/projects/${id}/project_menu`)
     }
 
     const goToEditProjectScreen = (id) => {
-        history.push("/edit_project", {id: id})
+        history.push(`/projects/${id}/edit_project`)
     }
 
 
+    if(loading){
+        return <CircularProgress></CircularProgress>
+    }
+
     return <div>
-            {projects.map((project) => {
+            {projects.length > 0 ? projects.map((project) => {
                 const {name, description } = project
                 return <MenuCard onClick={(e) => goToProjectScreen(project.id)}>
                         <CardContainer>
@@ -46,7 +53,7 @@ const ProjectList = () => {
                         </CardContainer>
                 </MenuCard>
                 }
-            )}
+            ) : <NoProjectPlaceholder>Adicione seu primeiro projeto</NoProjectPlaceholder>}
         </div>
 }
 
@@ -90,6 +97,10 @@ function ProjectsListScreen() {
         </Container>
     );
 }
+
+const NoProjectPlaceholder = styled.div`
+    margin-top: 20px;
+`
 
 const EditLink = styled.a`
     padding: 20px;

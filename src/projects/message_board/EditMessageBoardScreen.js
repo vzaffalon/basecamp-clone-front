@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import 'App';
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { Row, Column, Card, AlignCenter, PrimaryButton } from 'AppStyles';
 import { TextField, Breadcrumbs, Link, Typography, Button } from '@material-ui/core';
 import { useForm } from "react-hook-form";
 import { MessageBoard } from 'models'
+import DeleteIcon from '@material-ui/icons/Delete';
 import 'trix';
 import 'trix/dist/trix.css';
 
@@ -13,17 +14,26 @@ function NewMessageBoardScreen(){
     let history = useHistory();
     const { register, handleSubmit, watch, errors } = useForm();
     const [message, setMessage] = useState(null)
-    const location = useLocation();
+   let params = useParams();
 
     const editMessageBoard = (values) => {
-        const { id } = location.state
+        const { id } = params
         MessageBoard.update(id,values).then((response) => {
             history.goBack()
         })
     }
 
+
+    const deleteMessageBoard = () => {
+        const { id } = params
+        MessageBoard.destroy(id).then((response) => {
+            history.goBack()
+            history.goBack();
+        })
+    }
+
     const getMessage = () => {
-        const { id } = location.state
+        const { id } = params
         MessageBoard.show(id).then((response) => {
             setMessage(response.data)
         })
@@ -68,6 +78,15 @@ function NewMessageBoardScreen(){
                             Salvar
                         </Button>
                     </PrimaryButtonMargin>
+
+
+                    <DestroyButtonMargin>
+                        <Button onClick={() => { deleteMessageBoard() }} variant="contained"
+                            color="secondary"
+                            startIcon={<DeleteIcon />}>
+                            Excluir mural
+                        </Button>
+                    </DestroyButtonMargin>
                 </div>
             </form>}
             </MenuCard>
@@ -75,6 +94,10 @@ function NewMessageBoardScreen(){
     );
 }
 
+
+const DestroyButtonMargin = styled.div`
+    margin-top: 60px;
+`
 
 const BreadcrumbBottomBorder = styled.div`
     padding-bottom: 10px;

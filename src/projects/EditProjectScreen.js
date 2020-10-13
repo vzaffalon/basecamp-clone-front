@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { Row, Column, Card, AlignCenter, PrimaryButton } from 'AppStyles';
 import { useForm } from "react-hook-form";
 import { Project } from 'models'
@@ -11,10 +11,10 @@ function EditProjectScreen() {
     let history = useHistory();
     const { register, handleSubmit, watch, errors } = useForm();
     const [project, setProject] = useState(null)
-    const location = useLocation();
+   let params = useParams();
 
     const editProject = (values) => {
-        const { id } = location.state
+        const { id } = params
         Project.update(id,values).then((response) => {
             history.goBack()
         })
@@ -22,14 +22,14 @@ function EditProjectScreen() {
 
 
     const deleteProject = () => {
-        const { id } = location.state
+        const { id } = params
         Project.destroy(id).then((response) => {
             history.goBack()
         })
     }
 
     const getProject = () => {
-        const { id } = location.state
+        const { id } = params
         Project.show(id).then((response) => {
             setProject(response.data)
         })

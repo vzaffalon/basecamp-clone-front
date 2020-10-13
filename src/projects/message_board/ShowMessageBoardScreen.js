@@ -9,23 +9,23 @@ import { useHistory } from "react-router-dom";
 import { Card, AlignCenter, PrimaryButton, Row } from 'AppStyles';
 import { MessageBoard } from 'models';
 import { Button, Breadcrumbs, Link, Typography } from '@material-ui/core';
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 function ShowMessageBoardScreen(){
     let history = useHistory();
     const [message, setMessage] = useState(null)
-    const location = useLocation();
+   let params = useParams();
 
     const getMessage = () => {
-        const { id } = location.state
+        const { id } = params
         MessageBoard.show(id).then((response) => {
             setMessage(response.data)
         })
     }
 
     const goToEditMessageBoardScreen = () => {
-        const { id } = location.state
-        history.push('/edit_message_board', { id: id })
+        const { id } = params
+        history.push(`/message_boards/${id}/edit_message_board`)
     }
 
     useEffect(() => {

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { PrimaryButton, AlignCenter } from 'AppStyles'
 import { Column, Row } from 'AppStyles';
 import { Project, Document } from 'models/index.js';
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { TextField, Breadcrumbs, Link, Typography, Button, Card, CardContent, CardActions, GridList, Grid } from '@material-ui/core';
 import MoreHorizOutlinedIcon from '@material-ui/icons/MoreHorizOutlined';
 import api from 'models/ApiConsts.js';
@@ -12,7 +12,7 @@ import { useFieldArray, useForm } from "react-hook-form";
 
 function DocumentsListScreen() {
     let history = useHistory();
-    const location = useLocation();
+   let params = useParams();
     const [documents, setDocuments] = useState([])
     const [show_file_creation_list, setShowFileCreationList] = useState(false)
     const [files_in_creation, setFilesInCreation] = useState([])
@@ -28,7 +28,7 @@ function DocumentsListScreen() {
     },[])
 
     const getDocuments = () => {
-        const { id } = location.state
+        const { id } = params
         Document.list({project_id: id}).then((response) => {
             setDocuments(response.data)
         })
@@ -53,7 +53,7 @@ function DocumentsListScreen() {
     }
 
     const createFile = async (value, file_in_creation) => {
-        const { id } = location.state
+        const { id } = params
         return Document.create(
             file_in_creation,
           {

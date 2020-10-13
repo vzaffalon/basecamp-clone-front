@@ -39,34 +39,34 @@ export default function MainRouter() {
           <Route exact path="/projects">
             <ProjectsListScreen></ProjectsListScreen>
           </Route>
-          <Route path="/project_menu">
+          <Route path="/projects/:id/project_menu">
             <ProjectMenuScreen></ProjectMenuScreen>
           </Route>
-          <Route path="/edit_project">
+          <Route path="/projects/:id/edit_project">
             <EditProjectScreen></EditProjectScreen>
           </Route>
           <Route path="/new_project">
             <NewProjectScreen></NewProjectScreen>
           </Route>
-          <Route path="/message_boards">
+          <Route path="/projects/:id/message_boards">
             <MessageBoardListScreen></MessageBoardListScreen>
           </Route>
-          <Route path="/new_message_board">
+          <Route path="/projects/:id/new_message_board">
             <NewMessageBoardScreen></NewMessageBoardScreen>
           </Route>
-          <Route path="/show_message_board">
+          <Route path="/message_boards/:id/show_message_board">
             <ShowMessageBoardScreen></ShowMessageBoardScreen>
           </Route>
-          <Route path="/edit_message_board">
+          <Route path="/message_boards/:id/edit_message_board">
             <EditMessageBoardScreen></EditMessageBoardScreen>
           </Route>
-          <Route path="/todo_lists">
+          <Route path="/projects/:id/todo_lists">
             <TodoListScreen></TodoListScreen>
           </Route>
-          <Route path="/documents">
+          <Route path="/projects/:id/documents">
             <DocumentsListScreen></DocumentsListScreen>
           </Route>
-          <Route path="/calendar">
+          <Route path="/projects/:id/calendar">
             <CalendarScreen></CalendarScreen>
           </Route>
         </Switch>

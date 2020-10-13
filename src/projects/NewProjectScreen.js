@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { Row, Column, Card, AlignCenter, PrimaryButton } from 'AppStyles';
 import { useForm } from "react-hook-form";
 import { Project } from 'models'

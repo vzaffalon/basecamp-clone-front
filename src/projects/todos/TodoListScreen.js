@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { Card, AlignCenter, SecondaryButton, PrimaryButton, Row } from 'AppStyles';
-import { FormControlLabel, Checkbox, Button, TextField, Breadcrumbs, Link, Typography } from '@material-ui/core';
+import { FormControlLabel, CircularProgress, Checkbox, Button, TextField, Breadcrumbs, Link, Typography } from '@material-ui/core';
 import { useForm } from "react-hook-form";
 import { TodoList, Todo } from 'models';
 
 function TodoListScreen() {
     let history = useHistory();
-    const location = useLocation();
+   let params = useParams();
     const [new_todo_list_layout_visibility, setNewTodoListLayoutVisibility] = useState(false);
     const [new_todo_layout_visibility, setNewTodoLayoutVisibility] = useState(false);
     const [new_todo_list_id, setNewTodoListId] = useState(null);
     const [todo_lists, setTodoLists] = useState([]);
+    const [loading,setLoading] = useState(true);
 
     const TodoListList = ({ todo_lists_list = [], createNewTodo }) => {
 
@@ -44,7 +45,7 @@ function TodoListScreen() {
 
         
         return <AlignLeft>
-                {todo_lists_list.map((todo_list, index) => {
+                {todo_lists_list.length > 0 ? todo_lists_list.map((todo_list, index) => {
                 const {id, name , done, incomplete} = todo_list
                 return (
                     <div>
@@ -72,7 +73,7 @@ function TodoListScreen() {
                 <MessageDivider></MessageDivider>
             </div>)
             }
-        )
+        ) : <NoElementsPlaceholder>Nenhuma todo adicionada.</NoElementsPlaceholder>
         }
         </AlignLeft>
     }
@@ -80,10 +81,10 @@ function TodoListScreen() {
 
     const AddNewTodoListInput = () => {
         const { register, handleSubmit, watch, errors } = useForm();
-        const location = useLocation();
+       let params = useParams();
 
         const createNewTodoList = (values) => {
-            const { id } = location.state
+            const { id } = params
             values.project_id = id
             TodoList.create(values).then((response) => {
                 getTodoListLists();
@@ -107,10 +108,13 @@ function TodoListScreen() {
 
 
     const getTodoListLists = () => {
-        const { id } = location.state
+        
+        const { id } = params
+        setLoading(true)
         TodoList.list({project_id: id}).then(response => {
             setTodoLists(response.data)
             setNewTodoListLayoutVisibility(false)
+            setLoading(false)
         })
     }
 
@@ -124,6 +128,10 @@ function TodoListScreen() {
     useEffect(() => {
         getTodoListLists();
     }, []);
+
+    if (loading){
+        return <CircularProgress></CircularProgress>
+    }
 
     return (
         <AlignCenter>
@@ -154,11 +162,16 @@ function TodoListScreen() {
                 </AlignCenter>
 
                 {new_todo_list_layout_visibility && <AddNewTodoListInput></AddNewTodoListInput>}
-                <TodoListList todo_lists_list={todo_lists} createNewTodo={createNewTodo}></TodoListList>
+                {todo_lists.length > 0 ?<TodoListList todo_lists_list={todo_lists} createNewTodo={createNewTodo}></TodoListList> : <div>Adicione seu primeiro todo</div>}
             </MenuCard>
         </AlignCenter>
     );
 }
+
+const NoElementsPlaceholder = styled.div`
+    padding-top: 10px;
+    text-align: center;
+`
 
 const BreadcrumbBottomBorder = styled.div`
     padding-bottom: 10px;
