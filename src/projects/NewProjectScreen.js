@@ -22,7 +22,7 @@ function NewProjectScreen(){
             <MenuCard>
             <BreadcrumbBottomBorder>
                     <Breadcrumbs aria-label="breadcrumb">
-                            <Link color="inherit" onClick={() => {history.goBack(); history.goBack(); history.goBack();}}>
+                            <Link color="inherit" onClick={() => {history.goBack();}}>
                                 Projetos
                             </Link>
                             <Typography color="textPrimary">Novo</Typography>
@@ -108,8 +108,6 @@ const MenuCard = styled(Card)`
     flex-direction: column;
     margin-top: 20px;
     padding: 20px;
-    margin-right: 20px;
-    margin-left: 20px;
     min-width: 300px;
 
     @media(min-width: 800px) {

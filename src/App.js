@@ -21,23 +21,21 @@ const setAxiosInterceptor = () => {
 
 
 function App() {
-  const [finished_load, setFinishedLoading] = useState(false)
+  const [finishedLoading, setFinishedLoading] = useState(false)
 
   useEffect(() => {
     setAxiosInterceptor()
     setFinishedLoading(true)
   },[])
 
-  if(!finished_load){
-    return <div></div>
-  }
-
   return (
-    <AppContainer>
-      <ApplicationBackground>
-        <MainRouter></MainRouter>
-      </ApplicationBackground>
-    </AppContainer>
+    <div>
+      {finishedLoading ? <AppContainer>
+        <ApplicationBackground>
+          <MainRouter></MainRouter>
+        </ApplicationBackground>
+      </AppContainer> : null}
+    </div>
   );
 }
 

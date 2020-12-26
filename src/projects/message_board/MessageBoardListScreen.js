@@ -48,7 +48,7 @@ function MessageBoardListScreen(){
 
     const goToNewMessageBoardScreen = () => {
         const { id } = params
-        history.push(`projects/${id}/new_message_board`)
+        history.push(`/projects/${id}/new_message_board/`)
     }
 
     return (

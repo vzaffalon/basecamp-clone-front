@@ -94,7 +94,7 @@ export default function RegisterScreen() {
         </Typography>
         <form onSubmit={handleSubmit(registerUser)} className={classes.form} noValidate>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={12}>
               <TextField
                 autoComplete="fname"
                 name="name"
@@ -163,7 +163,7 @@ export default function RegisterScreen() {
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link onClick={() => history.goBack()} variant="body2">
+              <Link onClick={() => history.push("/login")} variant="body2">
                 Já tem uma conta? Entre!
               </Link>
             </Grid>

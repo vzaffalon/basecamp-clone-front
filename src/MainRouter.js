@@ -3,6 +3,7 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
+  Redirect,
   Link
 } from "react-router-dom";
 import ProjectsListScreen from 'projects/ProjectsListScreen'
@@ -23,12 +24,15 @@ export default function MainRouter() {
   return (
     <Router>
       <div>
-        
-        {/* A <Switch> looks through its children <Route>s and
-            renders the first one that matches the current URL. */}
         <Switch>
-          <Route exact path="/">
-            <LoginScreen></LoginScreen>
+          <Route exact path="/" render={() => {
+                    const token = localStorage.getItem('token');
+                    return (
+                      token ?
+                      <Redirect to="/projects" /> :
+                      <Redirect to="/login" /> 
+                    )
+                }}>
           </Route>
           <Route exact path="/login">
             <LoginScreen></LoginScreen>

@@ -74,22 +74,16 @@ function ProjectsListScreen() {
                 </div>
             </GlobMargin> */}
             <SpaceBetweenRow>
-                <Flex>
-                    <img src="logo.png" alt="Girl in a jacket" width="55"></img>
-                </Flex>
-                <DoubleFlex>
-                    <ProjectsListTitle>Seus Projetos</ProjectsListTitle>
-                </DoubleFlex>
-                <Flex>
-                    <RowCenterVertical>
+                {/* <img src="logo.png" alt="Girl in a jacket" width="55"></img> */}
+                <ProjectsListTitle>Seus Projetos</ProjectsListTitle>
+                <RowCenterVertical>
                         <TitleDivider></TitleDivider>
                         <PrimaryButtonMargin>
                             <Button size="small" onClick={(e) => goToNewProjectScreen()} variant="contained" color="primary">
                                 Novo
                             </Button>
                         </PrimaryButtonMargin>
-                    </RowCenterVertical>
-                </Flex>
+                </RowCenterVertical>
             </SpaceBetweenRow>
             <ListContainer>
                 <ProjectList></ProjectList>
@@ -179,7 +173,7 @@ const SpaceBetweenRow = styled.div`
     align-items: center;
     justify-content: space-between;
 
-    @media(mAX-width: 800px) {
+    @media(max-width: 800px) {
         margin-top: 20px;
     }
 

@@ -23,10 +23,10 @@ function TodoListScreen() {
 
             return <form onSubmit={handleSubmit(createNewTodo)}>
                 <div>
-                    <TextFieldMargin>
+                    <TextFieldMargin2>
                         <TextField id="standard-basic" label="Nome da tarefa" id="name" name="name" inputRef={register({ required: true })}  variant="outlined"
                                 size="small" />
-                    </TextFieldMargin>
+                    </TextFieldMargin2>
 
                     <Button size="small" type="submit" variant="contained" color="primary">
                         Adicionar essa tarefa
@@ -59,9 +59,9 @@ function TodoListScreen() {
                             />    
                         </CheckBoxMargin>
                 })}
-                 <Button size="small" onClick={() => {setNewTodoLayoutVisibility(!new_todo_layout_visibility); setNewTodoListId(id)}} type="submit" variant="outlined" color="primary">
+                {!new_todo_layout_visibility && <Button size="small" style={{marginTop: "5px", marginBottom: "5px"}} onClick={() => {setNewTodoLayoutVisibility(!new_todo_layout_visibility); setNewTodoListId(id)}} type="submit" variant="outlined" color="primary">
                      Adicionar uma tarefa
-                </Button>
+                </Button>}
                 {new_todo_layout_visibility && new_todo_list_id == id && <AddNewTodoInput></AddNewTodoInput>}
                 {done.map((todo) => {
                     const { name, done } = todo
@@ -178,6 +178,11 @@ const BreadcrumbBottomBorder = styled.div`
     border-bottom: 1px solid rgba(0,0,0,0.03);
 `
 
+const TextFieldMargin2 = styled.div`
+    margin-top: 10px;
+    margin-bottom: 15px;
+`
+
 const TextFieldMargin = styled.div`
     margin-top: 20px;
     margin-bottom: 10px;
@@ -241,7 +246,7 @@ const MessageDescription = styled.div`
 
 const MessageDivider = styled.div`
     height: 1px;
-    margin-top: 5px;
+    margin-top: 10px;
     background-color: #f2f2f2;
 `
 

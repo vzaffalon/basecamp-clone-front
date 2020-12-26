@@ -175,7 +175,7 @@ function DocumentsListScreen() {
                                     })}
                                 </Grid>
                                 :
-                                <div>Arraste seus arquivos aqui para adicionar-los no projeto.</div>
+                                <div style={{marginTop: "10px"}}>Arraste seus arquivos aqui para adicionar-los no projeto.</div>
                             }
                         </div>
                         </section>

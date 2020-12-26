@@ -46,7 +46,7 @@ function EditProjectScreen() {
                 {project && <div>
                     <BreadcrumbBottomBorder>
                         <Breadcrumbs aria-label="breadcrumb">
-                            <Link color="inherit" onClick={() => { history.goBack(); history.goBack(); history.goBack(); }}>
+                            <Link color="inherit" onClick={() => { history.goBack();}}>
                                 Projetos
                             </Link>
                             <Typography color="textPrimary">Editar</Typography>
