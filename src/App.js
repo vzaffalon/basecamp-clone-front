@@ -4,39 +4,43 @@ import MainRouter from 'MainRouter';
 import axios from 'axios';
 
 
-const setAxiosInterceptor = () => {
-  let token = localStorage.getItem('token')
-  if(token){
-    axios.interceptors.request.use(
-      async (config) => {
-       config.headers.Authorization = `Bearer ${token}`;
-        return config;
-      },
-      (error) => {
-        localStorage.removeItem('token')
-        return Promise.reject(error);
-      }
-    );
-  }
-}
-
-
 function App() {
-  const [finishedLoading, setFinishedLoading] = useState(false)
+
+  const setAxiosInterceptor = () => {
+    let token = localStorage.getItem('token')
+    if(token){
+      axios.interceptors.request.use(
+        async (config) => {
+         config.headers.Authorization = `Bearer ${token}`;
+          return config;
+        },
+        (error) => {
+          return Promise.reject(error);
+        }
+      );
+    }
+
+    axios.interceptors.response.use(function (response) {
+      // Do something with response data
+      return response;
+    }, function (error) {
+      localStorage.removeItem('token')
+      window.location.href = "/"
+      // Do something with response error
+      return Promise.reject(error);
+    });
+  }
 
   useEffect(() => {
     setAxiosInterceptor()
-    setFinishedLoading(true)
   },[])
 
   return (
-    <div>
-      {finishedLoading ? <AppContainer>
+      <AppContainer>
         <ApplicationBackground>
           <MainRouter></MainRouter>
         </ApplicationBackground>
-      </AppContainer> : null}
-    </div>
+      </AppContainer>
   );
 }
 
