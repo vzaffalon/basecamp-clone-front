@@ -13,6 +13,7 @@ const setAxiosInterceptor = () => {
         return config;
       },
       (error) => {
+        localStorage.removeItem('token')
         return Promise.reject(error);
       }
     );

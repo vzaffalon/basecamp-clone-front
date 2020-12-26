@@ -43,7 +43,7 @@ function MessageBoardListScreen(){
                         <MessageDivider></MessageDivider>
                     </a>)
             }
-        ) : <div style={{marginTop: "10px"}}>Adicione seu primeiro projeto</div>}</div>
+        ) : <div style={{marginTop: "10px"}}>Adicione seu primeiro mural</div>}</div>
     }
 
     const goToNewMessageBoardScreen = () => {
