@@ -84,6 +84,11 @@ const BreadcrumbBottomBorder = styled.div`
 const MenuIcon = styled.img`
     width: 67px;
     margin-top: 5px;
+
+    @media(min-width: 800px) {
+        margin-top: 25px;
+        width: 90px;
+    }
 `
 
 const ResponsiveRow = styled(Row)`

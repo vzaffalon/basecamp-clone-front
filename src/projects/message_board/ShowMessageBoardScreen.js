@@ -123,12 +123,11 @@ const LineDivider = styled.div`
     background-color: #283c46;
 `
 
+
 const MenuCard = styled(Card)`
     padding: 15px;
-    margin-top: 20px;
     min-height: 400px;
-    min-width: 300px;
-    max-width: 300px;
+    margin: 20px;
 
     @media(min-width: 800px) {
         margin-top: 40px;
