@@ -119,16 +119,17 @@ const AlignCenterFullHeight = styled(AlignCenter)`
     height: 100%;
 `
 
+
 const MenuCard = styled(Card)`
-    display: flex;
-    flex-direction: column;
-    margin-top: 20px;
-    padding: 20px;
-    margin-right: 20px;
-    margin-left: 20px;
-    max-width: 300px;
+    padding: 15px;
+    min-height: 400px;
+    margin: 20px;
+    width: 100%;
+    width: 300px;
 
     @media(min-width: 800px) {
+        margin-top: 40px;
+        width: 600px;
         width: 800px;
         height: 800px;
     }
