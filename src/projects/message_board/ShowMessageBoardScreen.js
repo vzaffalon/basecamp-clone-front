@@ -128,6 +128,7 @@ const MenuCard = styled(Card)`
     padding: 15px;
     min-height: 400px;
     margin: 20px;
+    width: 100%;
 
     @media(min-width: 800px) {
         margin-top: 40px;

@@ -43,7 +43,7 @@ function MessageBoardListScreen(){
                         <MessageDivider></MessageDivider>
                     </a>)
             }
-        ) : <div>Adicione seu primeiro projeto</div>}</div>
+        ) : <div style={{marginTop: "10px"}}>Adicione seu primeiro projeto</div>}</div>
     }
 
     const goToNewMessageBoardScreen = () => {
@@ -135,6 +135,7 @@ const MenuCard = styled(Card)`
     padding: 15px;
     min-height: 400px;
     margin: 20px;
+    width: 100%;
 
     @media(min-width: 800px) {
         margin-top: 40px;

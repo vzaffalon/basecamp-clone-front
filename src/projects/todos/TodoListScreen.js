@@ -162,7 +162,7 @@ function TodoListScreen() {
                 </AlignCenter>
 
                 {new_todo_list_layout_visibility && <AddNewTodoListInput></AddNewTodoListInput>}
-                {todo_lists.length > 0 ?<TodoListList todo_lists_list={todo_lists} createNewTodo={createNewTodo}></TodoListList> : <div>Adicione seu primeiro todo</div>}
+                {todo_lists.length > 0 ?<TodoListList todo_lists_list={todo_lists} createNewTodo={createNewTodo}></TodoListList> : <div style={{marginTop: "10px"}}>Adicione seu primeiro todo</div>}
             </MenuCard>
         </AlignCenter>
     );
@@ -261,6 +261,7 @@ const MenuCard = styled(Card)`
     padding: 15px;
     min-height: 400px;
     margin: 20px;
+    width: 100%;
 
     @media(min-width: 800px) {
         margin-top: 40px;
