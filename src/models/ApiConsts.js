@@ -1,3 +1,3 @@
-// var uri = 'https://glob-life-organizer.herokuapp.com/';
-var uri = 'http://localhost:3000/';
+var uri = 'https://glob-life-organizer.herokuapp.com/';
+// var uri = 'http://localhost:3000/';
 export default { uri };
