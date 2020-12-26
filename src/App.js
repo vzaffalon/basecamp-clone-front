@@ -20,15 +20,15 @@ function App() {
       );
     }
 
-    axios.interceptors.response.use(function (response) {
-      // Do something with response data
-      return response;
-    }, function (error) {
-      localStorage.removeItem('token')
-      window.location.href = "/"
-      // Do something with response error
-      return Promise.reject(error);
-    });
+    // axios.interceptors.response.use(function (response) {
+    //   // Do something with response data
+    //   return response;
+    // }, function (error) {
+    //   localStorage.removeItem('token')
+    //   window.location.href = "/"
+    //   // Do something with response error
+    //   return Promise.reject(error);
+    // });
   }
 
   useEffect(() => {

@@ -9,10 +9,11 @@ import MoreHorizOutlinedIcon from '@material-ui/icons/MoreHorizOutlined';
 import api from 'models/ApiConsts.js';
 import Dropzone from 'react-dropzone'
 import { useFieldArray, useForm } from "react-hook-form";
+import GetAppIcon from '@material-ui/icons/GetApp';
 
 function DocumentsListScreen() {
     let history = useHistory();
-   let params = useParams();
+    let params = useParams();
     const [documents, setDocuments] = useState([])
     const [show_file_creation_list, setShowFileCreationList] = useState(false)
     const [files_in_creation, setFilesInCreation] = useState([])
@@ -35,17 +36,18 @@ function DocumentsListScreen() {
     }
 
     const showFileCreationList = (acceptedFiles) => {
+        debugger;
         setFilesInCreation(acceptedFiles);
         setShowFileCreationList(true)
     }
 
     const createDocuments = (values) => {
         let promises = []
-        setShowFileCreationList(false)
-        setFilesInCreation([])
         files_in_creation.forEach(function (item, index) {
             promises.push(createFile(values.file_in_creation[index],item))
         });
+        setFilesInCreation([])
+        setShowFileCreationList(false)
 
         Promise.all(promises).then((values) => {
            getDocuments();
@@ -54,6 +56,7 @@ function DocumentsListScreen() {
 
     const createFile = async (value, file_in_creation) => {
         const { id } = params
+        debugger;
         return Document.create(
             file_in_creation,
           {
@@ -117,7 +120,7 @@ function DocumentsListScreen() {
                     </LeftMarginButton>
                     <LeftMarginButton>
                         <Button size="small" onClick={() => {dropzoneRef.current.open()}} variant="contained" color="primary">
-                            Adicionar arquivos
+                            Adicionar
                         </Button>
                     </LeftMarginButton>
                 </RowCenter>
@@ -131,7 +134,7 @@ function DocumentsListScreen() {
                                             <AlignCenter>
                                             <TextFieldMargin>
                                                 <TextFieldMargin>
-                                                    <img src={file_in_creation.path} alt="Girl in a jacket" width="80" height="80"></img>
+                                                    <img src={file_in_creation.path} alt="file" width="80" height="80"></img>
                                                 </TextFieldMargin>
                                             </TextFieldMargin>
                                             </AlignCenter>
@@ -140,25 +143,21 @@ function DocumentsListScreen() {
                                                     size="small" defaultValue={file_in_creation.name} />
                                             </TextFieldMargin>
                                             <TextFieldMargin>
-                                                <TextField fullWidth id="standard-basic" label="Notas" id="name" name={`file_in_creation[${index}].notes`} inputRef={register({ required: true })} variant="outlined"
+                                                <TextField fullWidth id="standard-basic" label="Notas" id="name" name={`file_in_creation[${index}].notes`} inputRef={register({ required: false })} variant="outlined"
                                                     size="small"  />
                                             </TextFieldMargin>
                                         </div>
 
                                     })}
                                       <Button type="submit" variant="contained" color="primary">
-                                                Salvar arquivos
+                                                Salvar
                                         </Button>
                                 </form>}
 
-                <Dropzone ref={dropzoneRef} onDrop={acceptedFiles => showFileCreationList(acceptedFiles)}>
-                    {({getRootProps, getInputProps}) => (
-                        <section>
-                        <div {...getRootProps()}>
-                            <input {...getInputProps()} />
+           
                            
                            
-                            {documents.length > 0 ? 
+                            {documents.length > 0 &&
                              <Grid container spacing={1}>
                                 {documents.map((document) => {
                                     const { name, notes, url } = document
@@ -171,16 +170,26 @@ function DocumentsListScreen() {
                                                 {/* <CardActions>
                                                     <Button size="small">Learn More</Button>
                                                 </CardActions> */}
+                                                <a href={api.uri + url} target="_blank" rel="noopener noreferrer" download>
+                                                <GetAppIcon></GetAppIcon>
+                                                </a>
                                             </CardSize></Grid>
                                     })}
                                 </Grid>
-                                :
-                                <div style={{marginTop: "10px"}}>Arraste seus arquivos aqui para adicionar-los no projeto.</div>
+                     
+                    }
+
+<Dropzone ref={dropzoneRef} onDrop={acceptedFiles => showFileCreationList(acceptedFiles)}>
+                                {({getRootProps, getInputProps}) => (
+                                    documents.length === 0 && <section>
+                                    <div {...getRootProps()}>
+                                        <input {...getInputProps()} />
+                                        <div style={{marginTop: "10px"}}>Arraste seus arquivos aqui para adicionar-los no projeto.</div>
+                                        </div>
+                        </section>)
                             }
-                        </div>
-                        </section>
-                    )}
-                </Dropzone>
+                            </Dropzone>
+               
             
         </MenuCard>
     </AlignCenter>
@@ -201,7 +210,7 @@ const FileNotes = styled.div`
 
 const CardSize = styled(Card)`
     margin-top: 15px;
-    height: 200px;
+    height: 230px;
 `
 
 const TextFieldMargin = styled.div`

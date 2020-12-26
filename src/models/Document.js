@@ -15,18 +15,12 @@ const list = async (params) => {
     });
 }
 
-// const create = async (payload) => {
-//     return new Promise(async (resolve, reject) => {
-//         resolve(axios.post(`${api.uri}${model_uri}`,payload));
-//     });
-// }
-
-
 const create = async (media, params, callback, onError) => {
     const body = new FormData();
     body.append("file", media);
     body.append("name", params.name);
     body.append("notes", params.notes);
+    body.append("project_id", params.project_id);
     return await axios
       .post(api.uri + "documents/", body, {
         onUploadProgress: (progressEvent) => callback(progressEvent, media),
